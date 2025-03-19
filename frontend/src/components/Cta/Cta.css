@@ -1,0 +1,33 @@
+.cta {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../img/dirt.jpg"); /* Caminho da imagem */
+  background-size: auto; /* Ajusta a imagem ao tamanho da div */
+  background-position: center; /* Centraliza a imagem */
+}
+
+.cta__img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 480px;
+  background-image: url("../../img/cta.webp"); /* Caminho da imagem */
+  background-size: contain; /* Ajusta a imagem ao tamanho da div */
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita repetição da imagem */
+}
+
+.cta__img__text {
+  width: 40%;
+  height: 40%;
+  background-color: rgba(0, 0, 0, 0.603);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,19 @@
+.about__cards {
+  display: flex;
+  justify-content: space-around;
+}
+
+.about__card {
+  width: 40%;
+  background-color: #76321e;
+  display: flex;
+  padding: 10px;
+}
+
+.about__card__text {
+  display: flex;
+  width: 100%;
+  background-color: #fef8eb;
+  display: flex;
+  flex-direction: column;
+}
