@@ -1,33 +1,16 @@
 .button {
-  width: 100px;
-  height: 30px;
+  height: 40px;
+  min-width: 60px;
+  max-width: 240px;
+  padding: 20px 40px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative; /* Necessário para o ::after */
-  background-image: url("../../img/texture_button.png");
-  background-size: cover;
-  background-position: center;
+  justify-content: center;
   border: solid rgba(255, 255, 255, 0.589);
   border-width: 2px 0 0 2px;
-  outline: 2px solid black;
-  color: white; /* Para manter a legibilidade */
-  font-weight: 200;
-  text-transform: uppercase;
-}
-
-/* Camada escura sobreposta */
-.button::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 98%;
-  height: 90%;
-  background: rgba(255, 255, 255, 0.144); /* Escurece a textura */
-  pointer-events: none; /* Não interfere no clique */
 }
 
 .button:hover {
-  outline: 2px solid rgb(255, 255, 255);
+  border: solid rgba(219, 219, 219, 0.589);
+  border-width: 2px 0 0 2px;
 }

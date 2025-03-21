@@ -1,15 +1,12 @@
-import Header from "./components/Header/Header";
-import Cta from "./components/Cta/Cta";
-import About from "./components/About/About";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "./components/Navbar/Navbar";
+import Banner from "./components/Banner/Banner";
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Cta />
-      <About />
+      <Navbar />
+      <Banner />
     </div>
   );
 }
