@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Index - Restaurantly Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link href="../static/../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../static/../static/assets/css/main.css" rel="stylesheet">
+  <link href="../static/crafting.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Restaurantly
+  * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header fixed-top">
+    <div class="branding d-flex align-items-cente">
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <!-- <img src="../static/assets/img/logo.png" alt=""> -->
+          <h1 class="sitename">PIZZARIA ESMERALDA</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="#hero" class="active">Início<br></a></li>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#crafting">Crafting</a></li>
+            <li><a href="#events">Eventos</a></li>
+            <li><a href="#chefs">Chefs</a></li>
+            <li><a href="#gallery">Galeria</a></li>
+            <li><a href="#contact">Contato</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+        {% if logado %}
+            <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+                <i class="fa-solid fa-user"></i> {{ user.nome }}
+            </a>
+            <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+                <i class="fa-solid fa-cart-shopping"></i> CARRINHO
+            </a>
+        {% else %}
+            <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+                <i class="fa-solid fa-user"></i> FAZER LOGIN 
+            </a>
+        {% endif %}
+    
+      </div>
+
+    </div>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="../static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 d-flex flex-column align-items-center align-items-lg-start">
+            <h2 data-aos="fade-up" data-aos-delay="100">Bem vindo à nossa <span>PIZZARIA</span></h2>
+            <p data-aos="fade-up" data-aos-delay="200">Oferecendo as melhores pizzas desde 2015!</p>
+            <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+              <a href="#menu" class="cta-btn">Nosso Menu</a>
+              <a href="#crafting" class="cta-btn">Crafite sua pizza!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+          <div class="col-lg-6 order-1 order-lg-2">
+            <img src="../static/assets/img/about.jpg" class="img-fluid about-img" alt="">
+          </div>
+          <div class="col-lg-6 order-2 order-lg-1 content">
+            <h3>Quem somos:</h3>
+            <p class="fst-italic">
+              Somos um grupo de amigos amantes de jogos e pizza.
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-all"></i> <span>10 anos de experiencia</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Pizzas delíciosas</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Exelente atendimento</span></li>
+            </ul>
+            <p>
+              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="why-us section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Diferenciais</h2>
+        <p>O que nos torna especiais</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-item">
+              <span>01</span>
+              <h4><a href="" class="stretched-link">pizzas temáticas</a></h4>
+              <p>Somos os únicos que oferecemos pizzas quadradas!</p>
+            </div>
+          </div><!-- Card Item -->
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-item">
+              <span>02</span>
+              <h4><a href="" class="stretched-link">Entrega Rápida</a></h4>
+              <p>Em menos de 20 minutos sua pizza sai do forno para sua casa</p>
+            </div>
+          </div><!-- Card Item -->
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-item">
+              <span>03</span>
+              <h4><a href="" class="stretched-link">Crafting de pizzas</a></h4>
+              <p>Não se prenda ao menu, crie sua própia pizza!</p>
+              <a href="#crafting" class="cta-btn var-1">Crafite sua pizza!</a>
+            </div>
+          </div><!-- Card Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Why Us Section -->
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Menu</h2>
+        <p>Veja nossas pizzas</p>
+      </div><!-- End Section Title -->
+
+      <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul class="menu-filters isotope-filters">
+              <li data-filter="*" class="filter-active">Todas</li>
+              <li data-filter=".filter-salgadas">Salgadas</li>
+              <li data-filter=".filter-doces">Doces</li>
+              <li data-filter=".filter-especiais">Especiais</li>
+            </ul>
+          </div>
+        </div><!-- Menu Filters -->
+
+        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+          <div class="col-lg-6 menu-item isotope-item filter-salgadas">
+            <img src="../static/assets/img/menu/calabresa.png" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Calabresa</a><span>R$35,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Coberta com calabresa fatiada e cebola roxa.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-especiais">
+            <img src="../static/assets/img/menu/camarao.png" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Camarão com Catupiry</a><span>R$49,90</span>
+            </div>
+            <div class="menu-ingredients">
+              Uma combinação refinada de camarão e catupiry cremoso.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-salgadas">
+            <img src="../static/assets/img/menu/frango-catupiry.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Frango com Catupiry</a><span>R$39,90</span>
+            </div>
+            <div class="menu-ingredients">
+              Frango desfiado com o tradicional requeijão catupiry.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-doces">
+            <img src="../static/assets/img/menu/chocolate.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Chocolate com Morango</a><span>R$34,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Cobertura de chocolate ao leite e morangos frescos.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-especiais">
+            <img src="../static/assets/img/menu/quatro-queijos.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Quatro Queijos</a><span>R$42,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Mussarela, gorgonzola, provolone e parmesão.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-salgadas">
+            <img src="../static/assets/img/menu/portuguesa.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Portuguesa</a><span>R$38,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Presunto, ovo, cebola, azeitonas e pimentão.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-doces">
+            <img src="../static/assets/img/menu/banana-canela.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Banana com Canela</a><span>R$30,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Rodelas de banana com açúcar e canela.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-doces">
+            <img src="../static/assets/img/menu/confete.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Chocolate com Confete</a><span>R$32,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Cobertura de chocolate e confeitos coloridos.
+            </div>
+          </div><!-- Menu Item -->
+        
+          <div class="col-lg-6 menu-item isotope-item filter-especiais">
+            <img src="../static/assets/img/menu/trufada.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Trufada Especial</a><span>R$45,00</span>
+            </div>
+            <div class="menu-ingredients">
+              Massa fina com recheio trufado e toque de avelã.
+            </div>
+          </div><!-- Menu Item -->
+        
+        </div>
+        <!-- Menu Item -->
+
+        </div><!-- Menu Container -->
+
+      </div>
+
+    </section><!-- /Menu Section -->
+
+    <!-- Specials Section -->
+    <section id="crafting" class="specials section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>CRAFTING</h2>
+        <p>Construa sua própria pizza!</p>
+      </div>
+    
+      <!-- 🆕 Div com os nomes dos itens -->
+      <div id="itens-colocados" class="container section-title" style="margin-bottom: 20px;">
+        <p><strong>Igredientes:</strong> Nenhum</p>
+      </div>
+    
+      <!-- Grid de crafting -->
+      <div class="grid-container">
+        {% for i in range(9) %}
+        <div
+          class="grid-cell"
+          data-pos="{{ i }}"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+        {% endfor %}
+      </div>
+    
+      <!-- Barra de itens -->
+      <div class="item-bar">
+        {% for item in itens %}
+        <div
+          class="item cta-btn"
+          draggable="true"
+          ondragstart="drag(event)"
+          id="{{ item.nome }}"
+        >
+          {{ item.nome }}
+        </div>
+        {% endfor %}
+      </div>
+    
+      <!-- Controles -->
+      <div class="controls">
+        <button class="btn btn-crafting" onclick="getGridState()">Craftar pizza!</button>
+        <button class="btn btn-danger" onclick="resetarItens()">Limpar crafting table</button>
+      </div>
+    
+      <!-- JavaScript -->
+      <script>
+        itens = {{ itens | tojson }};
+        let precoTotal = 30;
+
+        function allowDrop(ev) {
+          ev.preventDefault();
+        }
+    
+        function drag(ev) {
+          ev.dataTransfer.setData("text", ev.target.id);
+        }
+    
+        function drop(ev) {
+          ev.preventDefault();
+          const data = ev.dataTransfer.getData("text");
+          const draggedItem = document.getElementById(data);
+    
+          if (ev.target.classList.contains("grid-cell") && ev.target.children.length === 0) {
+            ev.target.appendChild(draggedItem);
+            atualizarItensNoGrid(); // 🆕 Atualiza nomes ao adicionar
+          }
+        }
+    
+        function getGridState() {
+          const cells = document.querySelectorAll(".grid-cell");
+          const igredientesPedido = [];
+    
+          cells.forEach((cell, i) => {
+            if (cell.firstChild) {
+              igredientesPedido.push({ posicao: i, item: cell.firstChild.id });
+            } else {
+              igredientesPedido.push({ posicao: i, item: null });
+            }
+          });
+          
+          const pedido = {
+            precoTotal: precoTotal,           // Preço total calculado
+            ingredientesPedido: igredientesPedido  // Lista de nomes dos ingredientes
+          };
+
+          fetch("/processar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(pedido)
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log("Resposta do servidor:", data);
+              alert(data.mensagem);
+              resetarItens(); // limpa o grid após craftar
+            })
+            .catch(err => {
+              console.error("Erro ao enviar dados:", err);
+              alert("Ocorreu um erro ao enviar os dados.");
+            });
+        }
+    
+        function resetarItens() {
+          const gridCells = document.querySelectorAll(".grid-cell");
+          const itemBar = document.querySelector(".item-bar");
+    
+          gridCells.forEach(cell => {
+            const item = cell.querySelector(".item");
+            if (item) {
+              itemBar.appendChild(item);
+            }
+          });
+    
+          atualizarItensNoGrid(); // 🆕 Atualiza nomes ao resetar
+        }
+    
+        // 🆕 Atualiza a div de nomes dos itens no grid
+        function atualizarItensNoGrid() {
+          const gridCells = document.querySelectorAll(".grid-cell");
+          const nomes = [];
+
+          gridCells.forEach(cell => {
+            if (cell.firstChild) {
+              const nomeItem = cell.firstChild.id;
+              nomes.push(nomeItem);
+
+              const ingrediente = itens.find(item => item.nome === nomeItem);
+              if (ingrediente) {
+                precoTotal += ingrediente.preco;
+              }
+            }
+          });
+
+          const div = document.getElementById("itens-colocados");
+
+          if (nomes.length === 0) {
+            div.innerHTML = "<p><strong>Itens no grid:</strong> Nenhum item</p>";
+          } else {
+            div.innerHTML = `
+              <p><strong>Itens no grid:</strong> ${nomes.join(", ")}</p>
+              <p><strong>Preço total:</strong> R$ ${precoTotal.toFixed(2)}</p>
+            `;
+          }
+        }
+
+      </script>
+    </section>
+    
+    <!-- /Specials Section -->
+
+    <!-- Events Section -->
+    <section id="events" class="events section">
+
+      <img class="slider-bg" src="../static/assets/img/events-bg.jpg" alt="" data-aos="fade-in">
+    
+      <div class="container">
+    
+        <div class="swiper init-swiper" data-aos="fade-up" data-aos-delay="100">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+    
+            <div class="swiper-slide">
+              <div class="row gy-4 event-item">
+                <div class="col-lg-6">
+                  <img src="../static/assets/img/events-slider/events-slider-1.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 content">
+                  <h3>Festa de Aniversário</h3>
+                  <div class="price">
+                    <p><span>$189</span></p>
+                  </div>
+                  <p class="fst-italic">
+                    Celebre seu aniversário com pizzas temáticas e diversão para todos os convidados. Uma experiência única em um ambiente inspirado no Minecraft.
+                  </p>
+                  <ul>
+                    <li><i class="bi bi-check2-circle"></i> Pizzas personalizadas para todos os gostos.</li>
+                    <li><i class="bi bi-check2-circle"></i> Ambiente temático com decoração de Minecraft.</li>
+                    <li><i class="bi bi-check2-circle"></i> Atividades e entretenimento para crianças e adultos.</li>
+                  </ul>
+                  <p>
+                    Traga sua turma para uma festa recheada de sabor e diversão, com nossas pizzas exclusivas e um ambiente que vai transportar todos para o mundo do Minecraft!
+                  </p>
+                </div>
+              </div>
+            </div><!-- End Slider item -->
+    
+            <div class="swiper-slide">
+              <div class="row gy-4 event-item">
+                <div class="col-lg-6">
+                  <img src="../static/assets/img/events-slider/events-slider-2.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 content">
+                  <h3>Festas Privadas</h3>
+                  <div class="price">
+                    <p><span>$290</span></p>
+                  </div>
+                  <p class="fst-italic">
+                    Planeje sua festa privada com pizzas artesanais e um ambiente único, perfeito para grupos fechados que desejam uma experiência exclusiva.
+                  </p>
+                  <ul>
+                    <li><i class="bi bi-check2-circle"></i> Pizzas personalizadas de acordo com sua preferência.</li>
+                    <li><i class="bi bi-check2-circle"></i> Serviço exclusivo em um espaço dedicado.</li>
+                    <li><i class="bi bi-check2-circle"></i> Decoração temática e ambiente Minecraft.</li>
+                  </ul>
+                  <p>
+                    Tenha a sua festa privada com a qualidade e o sabor que você merece. Com nossas pizzas temáticas e um ambiente único, sua festa será inesquecível!
+                  </p>
+                </div>
+              </div>
+            </div><!-- End Slider item -->
+    
+            <div class="swiper-slide">
+              <div class="row gy-4 event-item">
+                <div class="col-lg-6">
+                  <img src="../static/assets/img/events-slider/events-slider-3.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 content">
+                  <h3>Festas Personalizadas</h3>
+                  <div class="price">
+                    <p><span>$99</span></p>
+                  </div>
+                  <p class="fst-italic">
+                    Ofereça uma festa com pizzas personalizadas que atendem aos gostos de todos os convidados, com direito a decoração de Minecraft.
+                  </p>
+                  <ul>
+                    <li><i class="bi bi-check2-circle"></i> Escolha o sabor e o estilo de pizza.</li>
+                    <li><i class="bi bi-check2-circle"></i> Decoração personalizada de acordo com sua festa.</li>
+                    <li><i class="bi bi-check2-circle"></i> Entretenimento temático para todas as idades.</li>
+                  </ul>
+                  <p>
+                    Torne sua festa ainda mais especial com pizzas temáticas e uma decoração que fará todos se sentirem em um mundo Minecraft! Perfeito para todas as idades.
+                  </p>
+                </div>
+              </div>
+            </div><!-- End Slider item -->
+    
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+    
+      </div>
+    
+    </section>
+    <!-- /Events Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+      <!-- Section Title -->
+<div class="container section-title" data-aos="fade-up">
+  <h2>Depoimentos</h2>
+  <p>Veja o que estão dizendo sobre nós</p>
+</div><!-- End Section Title -->
+
+<div class="container" data-aos="fade-up" data-aos-delay="100">
+
+  <div class="swiper init-swiper" data-speed="600" data-delay="5000" data-breakpoints="{ &quot;320&quot;: { &quot;slidesPerView&quot;: 1, &quot;spaceBetween&quot;: 40 }, &quot;1200&quot;: { &quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 40 } }">
+    <script type="application/json" class="swiper-config">
+      {
+        "loop": true,
+        "speed": 600,
+        "autoplay": {
+          "delay": 5000
+        },
+        "slidesPerView": "auto",
+        "pagination": {
+          "el": ".swiper-pagination",
+          "type": "bullets",
+          "clickable": true
+        },
+        "breakpoints": {
+          "320": {
+            "slidesPerView": 1,
+            "spaceBetween": 40
+          },
+          "1200": {
+            "slidesPerView": 3,
+            "spaceBetween": 20
+          }
+        }
+      }
+    </script>
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide">
+        <div class="testimonial-item">
+          <p>
+            <i class="bi bi-quote quote-icon-left"></i>
+            <span>“A melhor experiência de pizzaria que já tive! As pizzas temáticas do Minecraft deram um toque especial à nossa festa. Recomendo demais!”</span>
+            <i class="bi bi-quote quote-icon-right"></i>
+          </p>
+          <img src="../static/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+          <h3>Lucas Almeida</h3>
+          <h4>Fã do Minecraft</h4>
+        </div>
+      </div><!-- End testimonial item -->
+
+      <div class="swiper-slide">
+        <div class="testimonial-item">
+          <p>
+            <i class="bi bi-quote quote-icon-left"></i>
+            <span>“A festa de aniversário foi incrível! O ambiente todo inspirado no Minecraft e as pizzas estavam deliciosas. Meus filhos amaram!”</span>
+            <i class="bi bi-quote quote-icon-right"></i>
+          </p>
+          <img src="../static/assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+          <h3>Maria Fernandes</h3>
+          <h4>Mãe de fã do Minecraft</h4>
+        </div>
+      </div><!-- End testimonial item -->
+
+      <div class="swiper-slide">
+        <div class="testimonial-item">
+          <p>
+            <i class="bi bi-quote quote-icon-left"></i>
+            <span>“Nunca imaginei que uma pizza pudesse ser tão divertida! O conceito de festas personalizadas é incrível, e os sabores são sensacionais.”</span>
+            <i class="bi bi-quote quote-icon-right"></i>
+          </p>
+          <img src="../static/assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+          <h3>Fernanda Souza</h3>
+          <h4>Cliente satisfeita</h4>
+        </div>
+      </div><!-- End testimonial item -->
+
+      <div class="swiper-slide">
+        <div class="testimonial-item">
+          <p>
+            <i class="bi bi-quote quote-icon-left"></i>
+            <span>“Tudo perfeito! As pizzas temáticas do Minecraft, a decoração e o atendimento fizeram nossa festa ser inesquecível. Super recomendo!”</span>
+            <i class="bi bi-quote quote-icon-right"></i>
+          </p>
+          <img src="../static/assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+          <h3>Gustavo Lima</h3>
+          <h4>Organizador de eventos</h4>
+        </div>
+      </div><!-- End testimonial item -->
+
+      <div class="swiper-slide">
+        <div class="testimonial-item">
+          <p>
+            <i class="bi bi-quote quote-icon-left"></i>
+            <span>“Eu e meus amigos adoramos a festa! O tema do Minecraft é perfeito para todas as idades e as pizzas estavam deliciosas. Com certeza voltaremos!”</span>
+            <i class="bi bi-quote quote-icon-right"></i>
+          </p>
+          <img src="../static/assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+          <h3>Carla Martins</h3>
+          <h4>Cliente feliz</h4>
+        </div>
+      </div><!-- End testimonial item -->
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+</div>
+
+</section><!-- /Testimonials Section -->
+
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Galeria</h2>
+        <p>Algumas fotos de noss pizzaria</p>
+      </div><!-- End Section Title -->
+
+      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row g-0">
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-1.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-2.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-3.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-3.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-4.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-4.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-5.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-5.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-6.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-6.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-7.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-7.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+              <a href="../static/assets/img/gallery/gallery-8.jpg" class="glightbox" data-gallery="images-gallery">
+                <img src="../static/assets/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
+              </a>
+            </div>
+          </div><!-- End Gallery Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Gallery Section -->
+
+    <!-- Chefs Section -->
+    <section id="chefs" class="chefs section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nosso Time</h2>
+        <p>Apenas os melhores</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="member">
+              <img src="../static/assets/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Walter White</h4>
+                  <span>Master Chef</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="member">
+              <img src="../static/assets/img/chefs/chefs-2.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>Sarah Jhonson</h4>
+                  <span>Patissier</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+              <img src="../static/assets/img/chefs/chefs-3.jpg" class="img-fluid" alt="">
+              <div class="member-info">
+                <div class="member-info-content">
+                  <h4>William Anderson</h4>
+                  <span>Cook</span>
+                </div>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Chefs Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contato</h2>
+        <p>Entre em contato conosco!</p>
+      </div><!-- End Section Title -->
+
+      <div class="mb-5" data-aos="fade-up" data-aos-delay="200">
+        <iframe style="border:0; width: 100%; height: 400px;"  src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d480.2243345745103!2d-47.79481835388233!3d-15.655918398452815!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a39aaf6467411%3A0x6b3b9a3ada2f6241!2sWan%20Ateli%C3%AA!5e0!3m2!1spt-BR!2sbr!4v1744746716617!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div><!-- End Google Maps -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4">
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-geo-alt flex-shrink-0"></i>
+              <div>
+                <h3>Localização</h3>
+                <p>Sobradinho, alguma quadra qualquer</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Horário de atendimento</h3>
+                <p>Segunda a sexta:<br>11:00 AM - 23:00 PM</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-telephone flex-shrink-0"></i>
+              <div>
+                <h3>Ligue para nós</h3>
+                <p>(61)99999-9999</p>
+              </div>
+            </div><!-- End Info Item -->
+
+            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+              <i class="bi bi-envelope flex-shrink-0"></i>
+              <div>
+                <h3>Nosso Email</h3>
+                <p>pizzaesmeralda@gmail.com</p>
+              </div>
+            </div><!-- End Info Item -->
+
+          </div>
+
+          <div class="col-lg-8">
+            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+          
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Seu Nome" required="">
+                </div>
+          
+                <div class="col-md-6">
+                  <input type="email" class="form-control" name="email" placeholder="Seu E-mail" required="">
+                </div>
+          
+                <div class="col-md-12">
+                  <input type="text" class="form-control" name="subject" placeholder="Assunto" required="">
+                </div>
+          
+                <div class="col-md-12">
+                  <textarea class="form-control" name="message" rows="6" placeholder="Mensagem" required=""></textarea>
+                </div>
+          
+                <div class="col-md-12 text-center">
+                  <div class="loading">Carregando...</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Sua mensagem foi enviada, obrigado!</div>
+          
+                  <button type="submit">Enviar</button>
+                </div>
+          
+              </div>
+            </form>
+          </div>
+          <!-- End Contact Form -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Contact Section -->
+
+  </main>
+
+  <footer id="footer" class="footer">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Restaurantly</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Sobradinho, alguma quadra qualquer</p>
+            <p class="mt-3"><strong>Telefone:</strong> <span>(61)99999-9999</span></p>
+            <p><strong>Email:</strong> <span>pizzaesmeralda@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Atalhos</h4>
+          <ul>
+            <li><a href="#hero">Início</a></li>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#crafting">Crafting</a></li>
+            <li><a href="#events   ">Eventos</a></li>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Pizzaria Esmeralda</strong> <span>(talvez) Alguns direiros reservados</span></p>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Desenvolvido por Dylan A. e Gabriel H.
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+
+</body>
+
+</html>
