@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify, session, redirect, url_for, render_template, request
+
 
 app = Flask(__name__)
+app.secret_key = "sua_chave_secreta"
 
 @app.route('/')
 def home():
@@ -56,6 +58,26 @@ def processar():
     else:
         print(f'enviando o pedido{nomesFiltrados} para o BD')
         return jsonify({'status': 'ok', 'mensagem': 'Pedido recebidos com sucesso! Sua pizza já está sendo preparada!'}), 200
+
+
+@app.route('/adicionar-carrinho', methods=['POST'])
+def adicionar_carrinho():
+    data = request.get_json()
+    nome_pizza = data.get("pizza")
+
+    if "carrinho" not in session:
+        session["carrinho"] = []
+
+    session["carrinho"].append(nome_pizza)
+    session.modified = True  # Para garantir que o Flask detecte a modificação
+
+    print(session["carrinho"])
+
+    return jsonify({"mensagem": f"{nome_pizza} adicionada ao carrinho!"})
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

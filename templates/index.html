@@ -204,7 +204,7 @@
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
 
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
-            <img src="../static/assets/img/menu/calabresa.png" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/calabresa.png" class="menu-img calabresa" alt="">
             <div class="menu-content">
               <a href="#">Calabresa</a><span>R$35,00</span>
             </div>
@@ -214,7 +214,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
-            <img src="../static/assets/img/menu/camarao.png" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/camarao.png" class="menu-img camarao" alt="">
             <div class="menu-content">
               <a href="#">Camarão com Catupiry</a><span>R$49,90</span>
             </div>
@@ -224,7 +224,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
-            <img src="../static/assets/img/menu/frango-catupiry.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/frango-catupiry.png" class="menu-img frango-catupiry" alt="">
             <div class="menu-content">
               <a href="#">Frango com Catupiry</a><span>R$39,90</span>
             </div>
@@ -234,7 +234,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-doces">
-            <img src="../static/assets/img/menu/chocolate.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/chocolate.png" class="menu-img chocolate" alt="">
             <div class="menu-content">
               <a href="#">Chocolate com Morango</a><span>R$34,00</span>
             </div>
@@ -244,7 +244,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
-            <img src="../static/assets/img/menu/quatro-queijos.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/quatro-queijos.png" class="menu-img quatro-queijos" alt="">
             <div class="menu-content">
               <a href="#">Quatro Queijos</a><span>R$42,00</span>
             </div>
@@ -254,7 +254,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
-            <img src="../static/assets/img/menu/portuguesa.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/portuguesa.png" class="menu-img portuguesa" alt="">
             <div class="menu-content">
               <a href="#">Portuguesa</a><span>R$38,00</span>
             </div>
@@ -264,7 +264,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-doces">
-            <img src="../static/assets/img/menu/banana-canela.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/banana-canela.png" class="menu-img banana-canela" alt="">
             <div class="menu-content">
               <a href="#">Banana com Canela</a><span>R$30,00</span>
             </div>
@@ -274,7 +274,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-doces">
-            <img src="../static/assets/img/menu/confete.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/confete.png" class="menu-img confete" alt="">
             <div class="menu-content">
               <a href="#">Chocolate com Confete</a><span>R$32,00</span>
             </div>
@@ -284,7 +284,7 @@
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
-            <img src="../static/assets/img/menu/trufada.jpg" class="menu-img" alt="">
+            <img src="../static/assets/img/menu/trufada.png" class="menu-img trufada" alt="">
             <div class="menu-content">
               <a href="#">Trufada Especial</a><span>R$45,00</span>
             </div>
@@ -292,7 +292,30 @@
               Massa fina com recheio trufado e toque de avelã.
             </div>
           </div><!-- Menu Item -->
-        
+          
+          <script>
+            document.querySelectorAll(".menu-img").forEach(img => {
+              img.addEventListener("click", function () {
+                const nomePizza = this.classList[1]; // a segunda classe é o nome da pizza (ex: portuguesa)
+          
+                fetch("/adicionar-carrinho", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ pizza: nomePizza })
+                })
+                .then(res => res.json())
+                .then(data => {
+                  alert(data.mensagem); // Exibe confirmação
+                })
+                .catch(err => {
+                  console.error("Erro ao adicionar pizza ao carrinho:", err);
+                });
+              });
+            });
+          </script>
+          
         </div>
         <!-- Menu Item -->
 
