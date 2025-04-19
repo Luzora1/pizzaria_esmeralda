@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = "sua_chave_secreta"
 
 
-# Banco de dados simples na memória
+# Banco falso
 usuarios = {}
 
 @app.route('/')
@@ -18,7 +18,7 @@ def login():
     email = request.form['email']
     senha = request.form['senha']
 
-    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha):
+    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha): # faz uma busca no 'BD falso'
         session['user'] = usuarios[email]
         return redirect('/home')
     else:
@@ -26,17 +26,16 @@ def login():
     
 @app.route('/register', methods=['POST'])
 def register():
-    nome = request.form['nome']
-    email = request.form['email']
-    senha = generate_password_hash(request.form['senha'])
-    xp = 0
-    esmeraldas = 0
+    nome = request.form['nome'] # pegando do form
+    email = request.form['email'] # pegando do form
+    senha = generate_password_hash(request.form['senha']) # pegando do form e criptografando
+    xp = 0 # iniciando zerado
+    esmeraldas = 0 # iniciando zerado 
 
     if email in usuarios:
         return "Usuário já existe"
 
-    usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas}
-    print(usuarios)
+    usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas} # criando o user e adicionando no 'BD falso'
     return redirect('/')
 
 {
