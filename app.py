@@ -1,19 +1,62 @@
 from flask import Flask, render_template, jsonify, session, redirect, url_for, render_template, request
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
 app.secret_key = "sua_chave_secreta"
 
+
+# Banco de dados simples na memória
+usuarios = {}
+
 @app.route('/')
+def loginRegister():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form['email']
+    senha = request.form['senha']
+
+    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha):
+        session['user'] = usuarios[email]
+        return redirect('/home')
+    else:
+        return redirect('/')
+    
+@app.route('/register', methods=['POST'])
+def register():
+    nome = request.form['nome']
+    email = request.form['email']
+    senha = generate_password_hash(request.form['senha'])
+    xp = 0
+    esmeraldas = 0
+
+    if email in usuarios:
+        return "Usuário já existe"
+
+    usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas}
+    print(usuarios)
+    return redirect('/')
+
+{
+    '321@email.com': {'nome': 'dwdAd', 'senha':123}, 
+    'emailteste@email.com': {'nome': 'eumesmo', 'senha':123}}
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
+
+
+
+@app.route('/home')
 def home():
 
     logado = True
 
-    user = {
-        'nome' : "Eumesmo",
-        'xp' : 9999,
-        'esmeraldas' : 20000
-    }
+    user = session.get('user')
 
     itens = [
     {"nome": "Calabresa", "preco": 2.50},
