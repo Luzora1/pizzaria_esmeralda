@@ -7,7 +7,7 @@ app.secret_key = "sua_chave_secreta"
 
 
 # Banco falso
-usuarios = {}
+usuarios = {'emailteste@email.com': {'nome': 'ADM', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 2000000}}
 
 @app.route('/')
 def loginRegister():
@@ -36,11 +36,10 @@ def register():
         return "Usuário já existe"
 
     usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas} # criando o user e adicionando no 'BD falso'
+    print(usuarios)
     return redirect('/')
 
-{
-    '321@email.com': {'nome': 'dwdAd', 'senha':123}, 
-    'emailteste@email.com': {'nome': 'eumesmo', 'senha':123}}
+
 
 
 @app.route('/logout')
@@ -53,9 +52,21 @@ def logout():
 @app.route('/home')
 def home():
 
-    logado = True
 
     user = session.get('user')
+
+    level = user["xp"] // 100
+
+    desconto = 0
+
+    if level >=5:
+        desconto = 0.05
+
+    if level >=15:
+        desconto = 0.15
+
+    if level >=30:
+        desconto = 0.30
 
     itens = [
     {"nome": "Calabresa", "preco": 2.50},
@@ -79,7 +90,7 @@ def home():
     {"nome": "Manjericão", "preco": 0.75},
     {"nome": "Orégano", "preco": 0.50}
 ]
-    return render_template('index.html', itens=itens, logado=logado, user=user)
+    return render_template('index.html', itens=itens, desconto=desconto, user=user)
 
 @app.route('/processar', methods=['POST'])
 def processar():

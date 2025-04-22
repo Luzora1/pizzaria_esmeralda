@@ -64,10 +64,12 @@
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-        {% if logado %}
+        <div class="d-none d-xl-block text-center">
+          {% if user %}
             <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
                 <i class="fa-solid fa-user"></i> {{ user.nome }}
             </a>
+            E${{ '%.2f' % user.esmeraldas }}
             <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
                 <i class="fa-solid fa-cart-shopping"></i> CARRINHO
             </a>
@@ -76,6 +78,8 @@
                 <i class="fa-solid fa-user"></i> FAZER LOGIN 
             </a>
         {% endif %}
+        </div>
+        
     
       </div>
 
@@ -203,10 +207,21 @@
 
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
 
+          <div class="col-12 text-center"> 
+            {% if desconto %}
+            <span style="background: var(--background-color);
+            color: var(--accent-color);
+            position: relative;
+            z-index: 3;
+            padding: 10px;
+            font-weight: 600;">Desconto de {{ desconto * 100 }}% graças à seu nível {{ user.xp // 100 }}, parabéns!!</span>
+            {% endif %}
+          </div> 
+          
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
             <img src="../static/assets/img/menu/calabresa.png" class="menu-img calabresa" alt="">
             <div class="menu-content">
-              <a href="#">Calabresa</a><span>R$35,00</span>
+              <a href="#">Calabresa</a><span>E${{ '%.2f' % (45 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Coberta com calabresa fatiada e cebola roxa.
@@ -216,7 +231,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
             <img src="../static/assets/img/menu/camarao.png" class="menu-img camarao" alt="">
             <div class="menu-content">
-              <a href="#">Camarão com Catupiry</a><span>R$49,90</span>
+              <a href="#">Camarão com Catupiry</a><span>E${{ '%.2f' % (50 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Uma combinação refinada de camarão e catupiry cremoso.
@@ -226,7 +241,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
             <img src="../static/assets/img/menu/frango-catupiry.png" class="menu-img frango-catupiry" alt="">
             <div class="menu-content">
-              <a href="#">Frango com Catupiry</a><span>R$39,90</span>
+              <a href="#">Frango com Catupiry</a><span>E${{ '%.2f' % (40 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Frango desfiado com o tradicional requeijão catupiry.
@@ -236,7 +251,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-doces">
             <img src="../static/assets/img/menu/chocolate.png" class="menu-img chocolate" alt="">
             <div class="menu-content">
-              <a href="#">Chocolate com Morango</a><span>R$34,00</span>
+              <a href="#">Chocolate com Morango</a><span>E${{ '%.2f' % (34 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Cobertura de chocolate ao leite e morangos frescos.
@@ -246,7 +261,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
             <img src="../static/assets/img/menu/quatro-queijos.png" class="menu-img quatro-queijos" alt="">
             <div class="menu-content">
-              <a href="#">Quatro Queijos</a><span>R$42,00</span>
+              <a href="#">Quatro Queijos</a><span>E${{ '%.2f' % (42 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Mussarela, gorgonzola, provolone e parmesão.
@@ -256,17 +271,17 @@
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
             <img src="../static/assets/img/menu/portuguesa.png" class="menu-img portuguesa" alt="">
             <div class="menu-content">
-              <a href="#">Portuguesa</a><span>R$38,00</span>
+              <a href="#">Portuguesa</a><span>E${{ '%.2f' % (38 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
-              Presunto, ovo, cebola, azeitonas e pimentão.
+              Presunto, ovo, cebola, azeitonas e pimentão. 
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-doces">
             <img src="../static/assets/img/menu/banana-canela.png" class="menu-img banana-canela" alt="">
             <div class="menu-content">
-              <a href="#">Banana com Canela</a><span>R$30,00</span>
+              <a href="#">Banana com Canela</a><span>E${{ '%.2f' % (30 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Rodelas de banana com açúcar e canela.
@@ -276,7 +291,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-doces">
             <img src="../static/assets/img/menu/confete.png" class="menu-img confete" alt="">
             <div class="menu-content">
-              <a href="#">Chocolate com Confete</a><span>R$32,00</span>
+              <a href="#">Chocolate com Confete</a><span>E${{ '%.2f' % (32 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Cobertura de chocolate e confeitos coloridos.
@@ -286,7 +301,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
             <img src="../static/assets/img/menu/trufada.png" class="menu-img trufada" alt="">
             <div class="menu-content">
-              <a href="#">Trufada Especial</a><span>R$45,00</span>
+              <a href="#">Trufada Especial</a><span>E${{ '%.2f' % (45 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Massa fina com recheio trufado e toque de avelã.
@@ -353,13 +368,21 @@
       <!-- Barra de itens -->
       <div class="item-bar">
         {% for item in itens %}
-        <div
+        <div style="
+        display: flex;
+        flex-direction: column"
           class="item cta-btn"
           draggable="true"
           ondragstart="drag(event)"
           id="{{ item.nome }}"
         >
-          {{ item.nome }}
+        <img
+          src="{{ url_for('static', filename='assets/img/ingredientes/' ~ item.nome ~ '.png') }}"
+          alt="{{ item.nome }}"
+          title="{{ item.nome }}"
+          style="height: 50px; width: auto;"
+          draggable="false"
+        />
         </div>
         {% endfor %}
       </div>
