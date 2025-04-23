@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Index - Restaurantly Bootstrap Template</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Favicons -->
+    <link href="../static/../static/assets/img/favicon.png" rel="icon" />
+    <link
+      href="../static/../static/assets/img/apple-touch-icon.png"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="../static/../static/assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/aos/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/swiper/swiper-bundle.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Main CSS File -->
+    <link href="../static/../static/assets/css/main.css" rel="stylesheet" />
+    <link href="../static/crafting.css" rel="stylesheet" />
+
+    <!-- =======================================================
+  * Template Name: Restaurantly
+  * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  </head>
+
+  <body class="index-page">
+    <header id="header" class="header fixed-top">
+      <div class="branding d-flex align-items-cente">
+  
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+          <a href="/home" class="logo d-flex align-items-center me-auto me-xl-0">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="../static/assets/img/logo.png" alt=""> -->
+            <h1 class="sitename">PIZZARIA ESMERALDA</h1>
+          </a>
+  
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="{{ url_for('home') }}#hero">Início</a></li>
+              <li><a href="{{ url_for('home') }}#about">Sobre</a></li>
+              <li><a href="{{ url_for('home') }}#menu">Menu</a></li>
+              <li><a href="{{ url_for('home') }}#crafting">Crafting</a></li>
+              <li><a href="{{ url_for('home') }}#events">Eventos</a></li>
+              <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
+              <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
+              <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
+  
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+          <div class="d-none d-xl-block text-center">
+            {% if user %}
+              <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+                  <i class="fa-solid fa-user"></i> {{ user.nome }}
+              </a>
+              E${{ '%.2f' % user.esmeraldas }}
+              <a class="btn-book-a-table d-none d-xl-block" href="/carrinho">
+                  <i class="fa-solid fa-cart-shopping"></i> CARRINHO
+              </a>
+          {% else %}
+              <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+                  <i class="fa-solid fa-user"></i> FAZER LOGIN 
+              </a>
+          {% endif %}
+          </div>
+          
+      
+        </div>
+  
+      </div>
+  
+    </header>
+
+    <main class="main carrinho-main">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">pizza</th>
+            <th scope="col">preço</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in carrinho %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ i[0] }}</td>
+            <td>{{ i[1] }}</td>
+            <td><button class="btn btn-danger" onclick="deletarItemCarrinho('{{ i[0] }}')">DELETAR</button></td>
+          </tr>
+          {% endfor %}
+          <td colspan="2">
+            <p>Total: E${{ '%.2f' % total }}</p>
+            <td>
+              {% if total == 0 %}
+              <button class="btn btn-success disabled">FAZER PAGAMENTO EM ESMERALDAS</button>
+              <p>Carrinho vazio!</p>
+              {% else %}
+              <button class="btn btn-success" onclick="fazerPagamento()">FAZER PAGAMENTO EM ESMERALDAS</button>
+              {% endif %}</td>
+          </td>
+        </tbody>
+      </table>
+      <p>Total: <span id="total-esmeraldas">E${{ '%.2f' % total }}</span></p>
+      <p>Seu saldo: <span id="saldo-esmeraldas">E${{ '%.2f' % session['user']['esmeraldas'] }}</span></p>
+      
+
+      <script>
+        function deletarItemCarrinho(nomePizza) {
+          fetch("/deletar-item", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ pizza: nomePizza })
+          })
+          .then(response => response.json())
+          .then(data => {
+            alert(data.mensagem || "Item removido!");
+            location.reload(); // recarrega a página pra atualizar a tabela
+          })
+          .catch(error => {
+            console.error("Erro ao deletar item:", error);
+          });
+        }
+
+        function fazerPagamento() {
+          // Pega o valor total diretamente da página
+          const totalText = document.querySelector("#total-esmeraldas").textContent;
+          const total = parseFloat(totalText.replace("E$", "").trim());
+
+          fetch("/pagar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ total: total })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.mensagem === "Pagamento realizado com sucesso!") {
+              // Exibe a mensagem de sucesso
+              alert(data.mensagem);
+              
+              // Recarrega a página para atualizar o header com o novo saldo
+              location.reload();
+            } else {
+              // Exibe erro caso não tenha saldo suficiente
+              alert(data.mensagem);
+            }
+          })
+          .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao processar o pagamento.');
+          });
+        }
+      </script>
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="container footer-top">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Restaurantly</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>Sobradinho, alguma quadra qualquer</p>
+              <p class="mt-3">
+                <strong>Telefone:</strong> <span>(61)99999-9999</span>
+              </p>
+              <p>
+                <strong>Email:</strong> <span>pizzaesmeralda@gmail.com</span>
+              </p>
+            </div>
+            <div class="social-links d-flex mt-4">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Atalhos</h4>
+            <ul>
+              <li><a href="#hero">Início</a></li>
+              <li><a href="#about">Sobre</a></li>
+              <li><a href="#menu">Menu</a></li>
+              <li><a href="#crafting">Crafting</a></li>
+              <li><a href="#events   ">Eventos</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container copyright text-center mt-4">
+        <p>
+          © <span>Copyright</span>
+          <strong class="px-1 sitename">Pizzaria Esmeralda</strong>
+          <span>(talvez) Alguns direiros reservados</span>
+        </p>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you've purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+          Desenvolvido por Dylan A. e Gabriel H.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+    <script src="../static/assets/vendor/aos/aos.js"></script>
+    <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="../static/assets/js/main.js"></script>
+  </body>
+</html>

@@ -45,7 +45,7 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
+        <a href="/home" class="logo d-flex align-items-center me-auto me-xl-0">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="../static/assets/img/logo.png" alt=""> -->
           <h1 class="sitename">PIZZARIA ESMERALDA</h1>
@@ -53,14 +53,15 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero" class="active">Início<br></a></li>
-            <li><a href="#about">Sobre</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#crafting">Crafting</a></li>
-            <li><a href="#events">Eventos</a></li>
-            <li><a href="#chefs">Chefs</a></li>
-            <li><a href="#gallery">Galeria</a></li>
-            <li><a href="#contact">Contato</a></li>
+            <li><a href="{{ url_for('home') }}#hero">Início</a></li>
+            <li><a href="{{ url_for('home') }}#about">Sobre</a></li>
+            <li><a href="{{ url_for('home') }}#menu">Menu</a></li>
+            <li><a href="{{ url_for('home') }}#crafting">Crafting</a></li>
+            <li><a href="{{ url_for('home') }}#events">Eventos</a></li>
+            <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
+            <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
+            <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
+
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -70,7 +71,7 @@
                 <i class="fa-solid fa-user"></i> {{ user.nome }}
             </a>
             E${{ '%.2f' % user.esmeraldas }}
-            <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+            <a class="btn-book-a-table d-none d-xl-block" href="/carrinho">
                 <i class="fa-solid fa-cart-shopping"></i> CARRINHO
             </a>
         {% else %}
@@ -225,6 +226,7 @@
             </div>
             <div class="menu-ingredients">
               Coberta com calabresa fatiada e cebola roxa.
+              <button class="btn-addCart" onClick="addNoCarrinho('calabresa', {{ (45 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
@@ -235,6 +237,7 @@
             </div>
             <div class="menu-ingredients">
               Uma combinação refinada de camarão e catupiry cremoso.
+              <button class="btn-addCart" onClick="addNoCarrinho('camarao', {{ (50 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
@@ -245,6 +248,7 @@
             </div>
             <div class="menu-ingredients">
               Frango desfiado com o tradicional requeijão catupiry.
+              <button class="btn-addCart" onClick="addNoCarrinho('frango-catupiry', {{ (40 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
@@ -255,71 +259,82 @@
             </div>
             <div class="menu-ingredients">
               Cobertura de chocolate ao leite e morangos frescos.
+              <button class="btn-addCart" onClick="addNoCarrinho('chocolate-morango', {{ (42 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
-            <img src="../static/assets/img/menu/quatro-queijos.png" class="menu-img quatro-queijos" alt="">
+            <img src="../static/assets/img/menu/quatro-queijos.png" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">Quatro Queijos</a><span>E${{ '%.2f' % (42 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Mussarela, gorgonzola, provolone e parmesão.
+              <button class="btn-addCart" onClick="addNoCarrinho('quatro-queijos', {{ (42 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
-            <img src="../static/assets/img/menu/portuguesa.png" class="menu-img portuguesa" alt="">
+            <img src="../static/assets/img/menu/portuguesa.png" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">Portuguesa</a><span>E${{ '%.2f' % (38 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Presunto, ovo, cebola, azeitonas e pimentão. 
+              <button class="btn-addCart" onClick="addNoCarrinho('portuguesa', {{ (38 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-doces">
-            <img src="../static/assets/img/menu/banana-canela.png" class="menu-img banana-canela" alt="">
+            <img src="../static/assets/img/menu/banana-canela.png" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">Banana com Canela</a><span>E${{ '%.2f' % (30 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Rodelas de banana com açúcar e canela.
+              <button class="btn-addCart" onClick="addNoCarrinho('banana-canela', {{ (30 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-doces">
-            <img src="../static/assets/img/menu/confete.png" class="menu-img confete" alt="">
+            <img src="../static/assets/img/menu/confete.png" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">Chocolate com Confete</a><span>E${{ '%.2f' % (32 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Cobertura de chocolate e confeitos coloridos.
+              <button class="btn-addCart" onClick="addNoCarrinho('confete', {{ (32 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
-            <img src="../static/assets/img/menu/trufada.png" class="menu-img trufada" alt="">
+            <img src="../static/assets/img/menu/trufada.png" 
+            class="menu-img"
+            data-preco= "{{ (45 * (1 - desconto)) | round(2) }}" 
+            data-nome = "trufada"
+            alt="">
             <div class="menu-content">
-              <a href="#">Trufada Especial</a><span>E${{ '%.2f' % (45 * (1 - desconto)) }}</span>
+              <a href="#">Trufada Especial</a>
+              <span>E${{ '%.2f' % (45 * (1 - desconto)) }}</span>
             </div>
             <div class="menu-ingredients">
               Massa fina com recheio trufado e toque de avelã.
+              <button class="btn-addCart" onClick="addNoCarrinho('trufada', {{ (45 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
           
           <script>
-            document.querySelectorAll(".menu-img").forEach(img => {
-              img.addEventListener("click", function () {
-                const nomePizza = this.classList[1]; // a segunda classe é o nome da pizza (ex: portuguesa)
-          
-                fetch("/adicionar-carrinho", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({ pizza: nomePizza })
-                })
+            function addNoCarrinho(name, price){
+              const nomePizza = name; 
+              const precoPizza = price;
+
+              fetch("/adicionar-carrinho", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ pizza: nomePizza, preco: precoPizza })
+              })
                 .then(res => res.json())
                 .then(data => {
                   alert(data.mensagem); // Exibe confirmação
@@ -327,8 +342,8 @@
                 .catch(err => {
                   console.error("Erro ao adicionar pizza ao carrinho:", err);
                 });
-              });
-            });
+            }
+              
           </script>
           
         </div>

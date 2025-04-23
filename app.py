@@ -7,7 +7,7 @@ app.secret_key = "sua_chave_secreta"
 
 
 # Banco falso
-usuarios = {'emailteste@email.com': {'nome': 'ADM', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 2000000}}
+usuarios = {'emailteste@email.com': {'nome': 'ADM', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 50}}
 
 @app.route('/')
 def loginRegister():
@@ -109,27 +109,87 @@ def processar():
     if not ingredientes_pedido:
         return jsonify({'status': 'ok', 'mensagem': 'Adicione ao menos um igrediente!'}), 200
     else:
-        print(f'enviando o pedido{nomesFiltrados} para o BD')
-        return jsonify({'status': 'ok', 'mensagem': 'Pedido recebidos com sucesso! Sua pizza já está sendo preparada!'}), 200
+        if "carrinho" not in session:
+            session["carrinho"] = []
+
+        pizzaNome = 'Pizza craftada - ' + ", ".join(pedido["ingredientes"])
+        pizza = [pizzaNome, pedido["preco"]]
+        session["carrinho"].append(pizza)
+        session.modified = True 
+
+        return jsonify({'status': 'ok', 'mensagem': 'Pizza craftada! Siga para o carrinho ou continue comprando!'}), 200
 
 
 @app.route('/adicionar-carrinho', methods=['POST'])
 def adicionar_carrinho():
     data = request.get_json()
-    nome_pizza = data.get("pizza")
+    nomePizza = data.get("pizza")
+    precoPizza = data.get("preco")
 
     if "carrinho" not in session:
         session["carrinho"] = []
+    
+    pizza = [nomePizza, precoPizza]
 
-    session["carrinho"].append(nome_pizza)
+    session["carrinho"].append(pizza)
     session.modified = True  # Para garantir que o Flask detecte a modificação
 
     print(session["carrinho"])
 
-    return jsonify({"mensagem": f"{nome_pizza} adicionada ao carrinho!"})
+    return jsonify({"mensagem": f"{nomePizza} adicionada ao carrinho!"})
 
 
+@app.route('/carrinho')
+def carrinho():
+    user = session.get('user')
+    if "carrinho" not in session:
+        session["carrinho"] = []
+    carrinho = session["carrinho"]
+    total = sum([i[1] for i in carrinho])
 
+    return render_template("carrinho.html", carrinho=carrinho, total=total, user=user)
+
+
+@app.route("/deletar-item", methods=["POST"])
+def deletar_item():
+    data = request.get_json()
+    nome_pizza = data.get("pizza")
+    user = session.get('user')
+    if "carrinho" not in session:
+        session["carrinho"] = []
+    carrinho = session["carrinho"]
+
+    # Exemplo de como deletar do carrinho (suponha que seja uma lista global ou de sessão)
+    for i in carrinho:
+        if i[0] == nome_pizza:
+            carrinho.remove(i)
+            break
+    
+
+    session["carrinho"] = carrinho
+    
+    total = sum([i[1] for i in carrinho])
+
+    print(session["carrinho"])
+    
+    return jsonify({"mensagem": f"{nome_pizza} removida do carrinho."})
+
+
+@app.route('/pagar', methods=['POST'])
+def pagar():
+    data = request.get_json()
+    total = data.get('total')
+
+    if 'user' in session and session['user']['esmeraldas'] >= total:
+        session['user']['esmeraldas'] -= total
+        session["carrinho"] = []
+        session.modified = True  # <- ESSENCIAL
+        return jsonify({
+            'mensagem': 'Pagamento realizado com sucesso!',
+            'novo_saldo': session['user']['esmeraldas']
+        })
+    else:
+        return jsonify({'mensagem': 'Saldo insuficiente ou usuário não logado.'}), 400
 
 
 if __name__ == '__main__':

@@ -48,3 +48,14 @@
 .var-1 {
   color: white;
 }
+
+.btn-addCart {
+  color: white;
+  background-color: rgb(0, 0, 0);
+  border: #cda45e solid 1px;
+}
+
+.table {
+  margin: 10%;
+  margin-left: 1%;
+}
