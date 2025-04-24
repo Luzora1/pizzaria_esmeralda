@@ -59,3 +59,13 @@
   margin: 10%;
   margin-left: 1%;
 }
+
+.user-main {
+  margin-top: 20%;
+}
+
+.user-main a {
+  color: #cda45e;
+  text-decoration: none;
+  font-size: 10px;
+}

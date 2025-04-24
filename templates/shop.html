@@ -65,14 +65,18 @@
   <body class="index-page">
     <header id="header" class="header fixed-top">
       <div class="branding d-flex align-items-cente">
-  
-        <div class="container position-relative d-flex align-items-center justify-content-between">
-          <a href="/home" class="logo d-flex align-items-center me-auto me-xl-0">
+        <div
+          class="container position-relative d-flex align-items-center justify-content-between"
+        >
+          <a
+            href="/home"
+            class="logo d-flex align-items-center me-auto me-xl-0"
+          >
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="../static/assets/img/logo.png" alt=""> -->
             <h1 class="sitename">PIZZARIA ESMERALDA</h1>
           </a>
-  
+
           <nav id="navmenu" class="navmenu">
             <ul>
               <li><a href="{{ url_for('home') }}#hero">Início</a></li>
@@ -83,119 +87,38 @@
               <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
               <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
               <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
-  
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
           <div class="d-none d-xl-block text-center">
             {% if user %}
-              <a class="btn-book-a-table d-none d-xl-block" href="/user">
-                  <i class="fa-solid fa-user"></i> {{ user.nome }}
-              </a>
-              E${{ '%.2f' % user.esmeraldas }}
-              <a class="btn-book-a-table d-none d-xl-block" href="/carrinho">
-                  <i class="fa-solid fa-cart-shopping"></i> CARRINHO
-              </a>
-          {% else %}
-              <a class="btn-book-a-table d-none d-xl-block" href="/">
-                  <i class="fa-solid fa-user"></i> FAZER LOGIN 
-              </a>
-          {% endif %}
+            <a class="btn-book-a-table d-none d-xl-block" href="/user">
+              <i class="fa-solid fa-user"></i> {{ user.nome }}
+            </a>
+            E${{ '%.2f' % user.esmeraldas }}
+            <a class="btn-book-a-table d-none d-xl-block" href="/carrinho">
+              <i class="fa-solid fa-cart-shopping"></i> CARRINHO
+            </a>
+            {% else %}
+            <a class="btn-book-a-table d-none d-xl-block" href="/">
+              <i class="fa-solid fa-user"></i> FAZER LOGIN
+            </a>
+            {% endif %}
           </div>
-          
-      
         </div>
-  
       </div>
-  
     </header>
 
-    <main class="main carrinho-main">
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">pizza</th>
-            <th scope="col">preço</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for i in carrinho %}
-          <tr>
-            <th scope="row">{{ loop.index }}</th>
-            <td>{{ i[0] }}</td>
-            <td>{{ i[1] }}</td>
-            <td><button class="btn btn-danger" onclick="deletarItemCarrinho('{{ i[0] }}')">DELETAR</button></td>
-          </tr>
-          {% endfor %}
-          <td colspan="2">
-            <p>Total: E${{ '%.2f' % total }}</p>
-            <td>
-              {% if total == 0 %}
-              <button class="btn btn-success disabled">FAZER PAGAMENTO EM ESMERALDAS</button>
-              <p>Carrinho vazio!</p>
-              {% else %}
-              <button class="btn btn-success" onclick="fazerPagamento()">FAZER PAGAMENTO EM ESMERALDAS</button>
-              {% endif %}</td>
-          </td>
-        </tbody>
-      </table>
-      <p>Total: <span id="total-esmeraldas">E${{ '%.2f' % total }}</span></p>
-      <p>Seu saldo: <span id="saldo-esmeraldas">E${{ '%.2f' % session['user']['esmeraldas'] }}</span></p>
-      
-
-      <script>
-        function deletarItemCarrinho(nomePizza) {
-          fetch("/deletar-item", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ pizza: nomePizza })
-          })
-          .then(response => response.json())
-          .then(data => {
-            alert(data.mensagem || "Item removido!");
-            location.reload(); // recarrega a página pra atualizar a tabela
-          })
-          .catch(error => {
-            console.error("Erro ao deletar item:", error);
-          });
-        }
-
-        function fazerPagamento() {
-          // Pega o valor total diretamente da página
-          const totalText = document.querySelector("#total-esmeraldas").textContent;
-          const total = parseFloat(totalText.replace("E$", "").trim());
-
-          fetch("/pagar", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ total: total })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.mensagem === "Pagamento realizado com sucesso!") {
-              // Exibe a mensagem de sucesso
-              alert(data.mensagem);
-              
-              // Recarrega a página para atualizar o header com o novo saldo
-              location.reload();
-            } else {
-              // Exibe erro caso não tenha saldo suficiente
-              alert(data.mensagem);
-            }
-          })
-          .catch(error => {
-            console.error('Erro:', error);
-            alert('Ocorreu um erro ao processar o pagamento.');
-          });
-        }
-      </script>
-      
+    <main class="row main shop-main">
+      <div class="shop">
+        <h1>Comprar Esmeraldas</h1>
+        <form action="/buyEsmeraldas" method="post">
+          <div class="form-group mb-2">
+            <label for="quantidade">Comprar 100 Esmeraldas</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Comprar</button>
+        </form>
+      </div>
     </main>
 
     <footer id="footer" class="footer">

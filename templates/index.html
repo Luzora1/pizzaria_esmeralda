@@ -67,7 +67,7 @@
         </nav>
         <div class="d-none d-xl-block text-center">
           {% if user %}
-            <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+            <a class="btn-book-a-table d-none d-xl-block" href="/user">
                 <i class="fa-solid fa-user"></i> {{ user.nome }}
             </a>
             E${{ '%.2f' % user.esmeraldas }}
@@ -75,7 +75,7 @@
                 <i class="fa-solid fa-cart-shopping"></i> CARRINHO
             </a>
         {% else %}
-            <a class="btn-book-a-table d-none d-xl-block" href="#book-a-table">
+            <a class="btn-book-a-table d-none d-xl-block" href="/">
                 <i class="fa-solid fa-user"></i> FAZER LOGIN 
             </a>
         {% endif %}

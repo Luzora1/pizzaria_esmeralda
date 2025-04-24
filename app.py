@@ -1,13 +1,17 @@
 from flask import Flask, render_template, jsonify, session, redirect, url_for, render_template, request
 from werkzeug.security import generate_password_hash, check_password_hash
 
+##########################
+# atenção: O session é um dicionário que armazena os dados do usuário logado, ele é armazenado no navegador do usuário e é usado para manter o estado da sessão entre as requisições.
+##########################
+
 
 app = Flask(__name__)
 app.secret_key = "sua_chave_secreta"
 
 
-# Banco falso
-usuarios = {'emailteste@email.com': {'nome': 'ADM', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 50}}
+# Banco falso esse aqui, só para teste
+usuarios = {'emailteste@email.com': {'nome': 'ADM', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 50, 'endereco': 'Rua teste, 123','email': 'emailteste@email.com'}}
 
 @app.route('/')
 def loginRegister():
@@ -15,27 +19,34 @@ def loginRegister():
 
 @app.route('/login', methods=['POST'])
 def login():
+    # Pegando os dados do form
     email = request.form['email']
     senha = request.form['senha']
 
-    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha): # faz uma busca no 'BD falso'
+    # aqui você pode fazer a verificação com o banco de dados real, esse só está sendo usado pq nao temos um banco de dados real
+    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha): # verificando se o email existe e se a senha está correta
+        # Se o login for bem-sucedido, armazene as informações do usuário na sessão
         session['user'] = usuarios[email]
-        return redirect('/home')
+        return redirect('/home') # Redireciona para a página inicial ou outra página após o login bem-sucedido
     else:
         return redirect('/')
     
 @app.route('/register', methods=['POST'])
 def register():
-    nome = request.form['nome'] # pegando do form
-    email = request.form['email'] # pegando do form
+    # Pegando os dados do form
+    nome = request.form['nome'] 
+    email = request.form['email'] 
+    endereco = request.form['endereco'] 
     senha = generate_password_hash(request.form['senha']) # pegando do form e criptografando
     xp = 0 # iniciando zerado
     esmeraldas = 0 # iniciando zerado 
 
+    # Verificando se o email já existe no "banco de dados", fazer isso com o banco de dados real
     if email in usuarios:
         return "Usuário já existe"
-
-    usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas} # criando o user e adicionando no 'BD falso'
+    
+    # Se o email não existir, armazene as informações do usuário na sessão
+    usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas, 'endereco': endereco, 'email': email} # criando o user e adicionando no 'BD falso'
     print(usuarios)
     return redirect('/')
 
@@ -44,6 +55,7 @@ def register():
 
 @app.route('/logout')
 def logout():
+    # Limpa a sessão do usuário
     session.pop('user', None)
     return redirect('/')
 
@@ -132,7 +144,7 @@ def adicionar_carrinho():
     pizza = [nomePizza, precoPizza]
 
     session["carrinho"].append(pizza)
-    session.modified = True  # Para garantir que o Flask detecte a modificação
+    session.modified = True  
 
     print(session["carrinho"])
 
@@ -181,15 +193,63 @@ def pagar():
     total = data.get('total')
 
     if 'user' in session and session['user']['esmeraldas'] >= total:
-        session['user']['esmeraldas'] -= total
-        session["carrinho"] = []
-        session.modified = True  # <- ESSENCIAL
+        session['user']['esmeraldas'] -= total # Atualiza o saldo do usuário 
+        # Aqui voce deve fazer a atualização no banco de dados real, esse só está sendo usado pq nao temos um banco de dados real
+        # Lembrar de adicionar o endereço do usuário no pedido
+        # Aqui voce deve adicionar o pedido no banco de dados real, esse só está sendo usado pq nao temos um banco de dados real, o pedido está no session["carrinho"]
+        session["carrinho"] = [] # Limpa o carrinho após o pagamento
+        session['user']['xp'] += 55 # Adiciona XP ao usuário, aqui você pode adicionar o valor que quiser, só para teste, atualizar no BD real 
+        session.modified = True  
         return jsonify({
             'mensagem': 'Pagamento realizado com sucesso!',
             'novo_saldo': session['user']['esmeraldas']
         })
     else:
         return jsonify({'mensagem': 'Saldo insuficiente ou usuário não logado.'}), 400
+
+
+@app.route('/user')
+def user():
+    user = session.get('user')
+
+    return render_template("user.html", user=user)
+
+
+@app.route('/userEdit', methods=['POST'])
+def userEdit():
+    # Pegando os dados do form
+    nome = request.form['nome'] 
+    email = request.form['email'] 
+    endereco = request.form['endereco']
+    
+    user = session.get('user')
+    # Atualizando o user no session, aqui voce tem que pegar as modificações e atualizar no banco de dados real, esse só está sendo usado pq nao temos um banco de dados real
+    session['user'] = {'nome': nome, 'senha': user['senha'], 'xp': user['xp'], 'esmeraldas': user['esmeraldas'], 'endereco': endereco, 'email': email} 
+    session.modified = True  
+    user = session.get('user')
+
+    return render_template("user.html", user=user)
+
+
+@app.route('/shop')
+def shop():
+    user = session.get('user')
+
+    return render_template("shop.html", user=user)
+
+
+@app.route('/buyEsmeraldas', methods=['POST'])
+def buyEsmeraldas():
+    # Pegando os dados do form
+    user = session.get('user')
+    # Atualizando o user no session, aqui voce tem que pegar as modificações e atualizar no banco de dados real, esse só está sendo usado pq nao temos um banco de dados real
+    session['user']['esmeraldas'] += 100 
+    session['user']['xp'] += 15 
+    session.modified = True  
+    user = session.get('user')
+
+    return render_template("shop.html", user=user)
+
 
 
 if __name__ == '__main__':
