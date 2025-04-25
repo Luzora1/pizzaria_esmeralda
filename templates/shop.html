@@ -109,15 +109,30 @@
       </div>
     </header>
 
-    <main class="row main shop-main">
-      <div class="shop">
-        <h1>Comprar Esmeraldas</h1>
-        <form action="/buyEsmeraldas" method="post">
-          <div class="form-group mb-2">
-            <label for="quantidade">Comprar 100 Esmeraldas</label>
+    <main class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow-lg border-0">
+            <div class="card-body">
+              <h2 class="card-title text-center mb-4">💎 Comprar Esmeraldas</h2>
+              <form action="/buyEsmeraldas" method="post">
+                <div class="form-group mb-3">
+                  <label for="quantidade" class="form-label"
+                    >Selecione o pacote:</label
+                  >
+                  <select class="form-select" name="quantidade" id="quantidade">
+                    <option value="100">100 Esmeraldas - R$95,00</option>
+                    <option value="250">250 Esmeraldas - R$220,00</option>
+                    <option value="500">500 Esmeraldas - R$400,00</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-success w-100">
+                  💳 Comprar Agora
+                </button>
+              </form>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">Comprar</button>
-        </form>
+        </div>
       </div>
     </main>
 

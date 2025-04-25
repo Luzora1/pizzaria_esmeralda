@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Index - Restaurantly Bootstrap Template</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Favicons -->
+    <link href="../static/../static/assets/img/favicon.png" rel="icon" />
+    <link
+      href="../static/../static/assets/img/apple-touch-icon.png"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="../static/../static/assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/aos/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../static/../static/assets/vendor/swiper/swiper-bundle.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Main CSS File -->
+    <link href="../static/../static/assets/css/main.css" rel="stylesheet" />
+    <link href="../static/crafting.css" rel="stylesheet" />
+
+    <!-- =======================================================
+  * Template Name: Restaurantly
+  * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  </head>
+
+  <body class="index-page">
+    <main class="main adm-main py-4">
+      <form action="/logoutAdmin" method="post">
+        <button type="submit" class="btn btn-primary">
+          SAIR DO PAINEL DE ADMIN
+        </button>
+      </form>
+      <div class="container">
+        <div class="row">
+          <!-- Coluna de Pedidos Pendentes -->
+          <div class="col-md-4">
+            <h2 class="mb-4">Pedidos Pendentes</h2>
+            <div class="list-group">
+              {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
+              == 'Pendente' %}
+              <div class="list-group-item mb-3 border rounded shadow-sm">
+                <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
+
+                <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
+                <ul class="mb-2">
+                  {% for pizza in pedido.pizzas %}
+                  <li>{{ pizza }}</li>
+                  {% endfor %}
+                </ul>
+
+                <p class="mb-1">
+                  📍 <strong>Endereço:</strong> {{ pedido.endereco }}
+                </p>
+                <p class="mb-1">
+                  ✉️ <strong>Email:</strong> {{ pedido.email }}
+                </p>
+                <p class="mb-1">
+                  ⏳ <strong>Status:</strong> {{ pedido.status }}
+                </p>
+                <p class="mb-0">
+                  💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+                </p>
+                <form action="/atualizarPedido" method="post" class="mt-2">
+                  <input
+                    type="hidden"
+                    name="pedido_id"
+                    value="{{ pedido_id }}"
+                  />
+                  <input type="hidden" name="pedido_type" value="upgrade" />
+                  <button type="submit" class="btn btn-primary">
+                    ENVIAR PEDIDO
+                  </button>
+                </form>
+              </div>
+              {% endif %} {% endfor %}
+            </div>
+          </div>
+
+          <!-- Coluna de Pedidos Enviados -->
+          <div class="col-md-4">
+            <h2 class="mb-4">Enviados</h2>
+            <div class="list-group">
+              {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
+              == 'Enviado' %}
+              <div class="list-group-item mb-3 border rounded shadow-sm">
+                <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
+
+                <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
+                <ul class="mb-2">
+                  {% for pizza in pedido.pizzas %}
+                  <li>{{ pizza }}</li>
+                  {% endfor %}
+                </ul>
+
+                <p class="mb-1">
+                  📍 <strong>Endereço:</strong> {{ pedido.endereco }}
+                </p>
+                <p class="mb-1">
+                  ✉️ <strong>Email:</strong> {{ pedido.email }}
+                </p>
+                <p class="mb-1">
+                  📦 <strong>Status:</strong> {{ pedido.status }}
+                </p>
+                <p class="mb-0">
+                  💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+                </p>
+                <form action="/atualizarPedido" method="post" class="mt-2">
+                  <input
+                    type="hidden"
+                    name="pedido_id"
+                    value="{{ pedido_id }}"
+                  />
+                  <input type="hidden" name="pedido_type" value="upgrade" />
+                  <button type="submit" class="btn btn-success">
+                    FINALIZAR PEDIDO
+                  </button>
+                </form>
+                <form action="/atualizarPedido" method="post" class="mt-2">
+                  <input
+                    type="hidden"
+                    name="pedido_id"
+                    value="{{ pedido_id }}"
+                  />
+                  <input type="hidden" name="pedido_type" value="downgrade" />
+
+                  <button type="submit" class="btn btn-primary">
+                    VOLTAR PARA PENDENTE
+                  </button>
+                </form>
+              </div>
+              {% endif %} {% endfor %}
+            </div>
+          </div>
+          <!-- Coluna de Pedidos Enviados -->
+          <div class="col-md-4">
+            <h2 class="mb-4">Entregados/finalizados</h2>
+            <div class="list-group">
+              {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
+              == 'Finalizado' %}
+              <div class="list-group-item mb-3 border rounded shadow-sm">
+                <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
+
+                <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
+                <ul class="mb-2">
+                  {% for pizza in pedido.pizzas %}
+                  <li>{{ pizza }}</li>
+                  {% endfor %}
+                </ul>
+
+                <p class="mb-1">
+                  📍 <strong>Endereço:</strong> {{ pedido.endereco }}
+                </p>
+                <p class="mb-1">
+                  ✉️ <strong>Email:</strong> {{ pedido.email }}
+                </p>
+                <p class="mb-1">
+                  ✅ <strong>Status:</strong> {{ pedido.status }}
+                </p>
+                <p class="mb-0">
+                  💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+                </p>
+                <form action="/atualizarPedido" method="post" class="mt-2">
+                  <input
+                    type="hidden"
+                    name="pedido_id"
+                    value="{{ pedido_id }}"
+                  />
+                  <input type="hidden" name="pedido_type" value="upgrade" />
+
+                  <button type="submit" class="btn btn-danger">
+                    DELETAR PEDIDO
+                  </button>
+                </form>
+                <form action="/atualizarPedido" method="post" class="mt-2">
+                  <input
+                    type="hidden"
+                    name="pedido_id"
+                    value="{{ pedido_id }}"
+                  />
+                  <input type="hidden" name="pedido_type" value="downgrade" />
+
+                  <button type="submit" class="btn btn-success">
+                    VOLTAR PARA ENVIADO
+                  </button>
+                </form>
+              </div>
+              {% endif %} {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+    <script src="../static/assets/vendor/aos/aos.js"></script>
+    <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../static/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="../static/assets/js/main.js"></script>
+  </body>
+</html>
