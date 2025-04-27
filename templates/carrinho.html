@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Index - Restaurantly Bootstrap Template</title>
+    <title>Pizzaria esmeralda</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
@@ -67,7 +67,8 @@
       <div class="branding d-flex align-items-cente">
   
         <div class="container position-relative d-flex align-items-center justify-content-between">
-          <a href="/home" class="logo d-flex align-items-center me-auto me-xl-0">
+          <a 
+          href="/" class="logo d-flex align-items-center me-auto me-xl-0">
             <!-- Uncomment the line below if you also wish to use an image logo -->
             <!-- <img src="../static/assets/img/logo.png" alt=""> -->
             <h1 class="sitename">PIZZARIA ESMERALDA</h1>
@@ -83,6 +84,7 @@
               <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
               <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
               <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
+              <li ><a class="esmeraldas" href="/shop">+ Esmeraldas</a></li>
   
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -141,7 +143,7 @@
           </td>
         </tbody>
       </table>
-      <p>Total: <span id="total-esmeraldas">E${{ '%.2f' % total }}</span></p>
+      <a class="btn btn-success" href="/shop">ADQUIRIR MAIS ESMERALDAS</a>
       <p>Seu saldo: <span id="saldo-esmeraldas">E${{ '%.2f' % session['user']['esmeraldas'] }}</span></p>
       
 

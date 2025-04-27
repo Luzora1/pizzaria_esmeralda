@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Restaurantly Bootstrap Template</title>
+  <title>Pizzaria esmeralda</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -45,7 +45,8 @@
     <div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
-        <a href="/home" class="logo d-flex align-items-center me-auto me-xl-0">
+        <a 
+        href="/" class="logo d-flex align-items-center me-auto me-xl-0">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <!-- <img src="../static/assets/img/logo.png" alt=""> -->
           <h1 class="sitename">PIZZARIA ESMERALDA</h1>
@@ -61,6 +62,7 @@
             <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
             <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
             <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
+            <li ><a class="cta-btn" href="/shop">+ Esmeraldas</a></li>
 
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -74,8 +76,24 @@
             <a class="btn-book-a-table d-none d-xl-block" href="/carrinho">
                 <i class="fa-solid fa-cart-shopping"></i> CARRINHO
             </a>
+            <div id="cart-count" style="
+            position: absolute;
+            top: 55px;
+            right: 10px;
+            background: red;
+            color: white;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">
+            {{ carrinho|length }}
+          </div>
         {% else %}
-            <a class="btn-book-a-table d-none d-xl-block" href="/">
+            <a class="btn-book-a-table d-none d-xl-block" href="/loginRegister">
                 <i class="fa-solid fa-user"></i> FAZER LOGIN 
             </a>
         {% endif %}
@@ -103,6 +121,9 @@
             <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
               <a href="#menu" class="cta-btn">Nosso Menu</a>
               <a href="#crafting" class="cta-btn">Crafite sua pizza!</a>
+            </div>
+            <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+              <a href="/shop" class="cta-btn esmeraldas">Adquirir mais esmeraldas!</a>
             </div>
           </div>
         </div>
@@ -328,6 +349,10 @@
               const nomePizza = name; 
               const precoPizza = price;
 
+              var cartCountElement = document.getElementById('cart-count');
+              var currentCount = parseInt(cartCountElement.innerText);
+              cartCountElement.innerText = currentCount + 1;
+
               fetch("/adicionar-carrinho", {
                 method: "POST",
                 headers: {
@@ -436,6 +461,11 @@
           const cells = document.querySelectorAll(".grid-cell");
           const igredientesPedido = [];
     
+          
+          var cartCountElement = document.getElementById('cart-count');
+          var currentCount = parseInt(cartCountElement.innerText);
+          cartCountElement.innerText = currentCount + 1;
+          
           cells.forEach((cell, i) => {
             if (cell.firstChild) {
               igredientesPedido.push({ posicao: i, item: cell.firstChild.id });

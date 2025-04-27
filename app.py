@@ -17,7 +17,7 @@ admin = {'ADM-1': {'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f6
 pedidos = {} 
 id_contador  = 1
 
-@app.route('/')
+@app.route('/loginRegister')
 def loginRegister():
     return render_template('login.html')
 
@@ -31,9 +31,9 @@ def login():
     if email in usuarios and check_password_hash(usuarios[email]['senha'], senha): # verificando se o email existe e se a senha está correta
         # Se o login for bem-sucedido, armazene as informações do usuário na sessão
         session['user'] = usuarios[email]
-        return redirect('/home') # Redireciona para a página inicial ou outra página após o login bem-sucedido
+        return redirect('/') # Redireciona para a página inicial ou outra página após o login bem-sucedido
     else:
-        return redirect('/')
+        return redirect('/loginRegister')
     
 @app.route('/register', methods=['POST'])
 def register():
@@ -51,7 +51,7 @@ def register():
     
     # Se o email não existir, armazene as informações do usuário na sessão
     usuarios[email] = {'nome': nome, 'senha': senha, 'xp': xp, 'esmeraldas': esmeraldas, 'endereco': endereco, 'email': email} # criando o user e adicionando no 'BD falso'
-    print(usuarios)
+    session['user'] = usuarios[email]
     return redirect('/')
 
 
@@ -65,13 +65,11 @@ def logout():
 
 
 
-@app.route('/home')
+@app.route('/')
 def home():
 
-    if 'user' not in session:
-        return redirect('/')
-    
     user = session.get('user')
+
 
     level = 0
     if user and 'xp' in user:
@@ -110,10 +108,13 @@ def home():
     {"nome": "Manjericão", "preco": 0.75},
     {"nome": "Orégano", "preco": 0.50}
 ]
-    return render_template('index.html', itens=itens, desconto=desconto, user=user)
+    return render_template('index.html', itens=itens, desconto=desconto, user=user, carrinho=session.get("carrinho", []))
 
 @app.route('/processar', methods=['POST'])
 def processar():
+    if 'user' not in session:
+        return jsonify({'status': 'ok', 'mensagem': 'Faça o login antes de fazer um pedido!'}), 200
+    
     data = request.get_json()  # Obtém os dados do frontend
     precoTotal = data['precoTotal']  # Acessa o preço total
     ingredientes_pedido = data['ingredientesPedido']  # Acessa a lista de ingredientes
@@ -142,6 +143,9 @@ def processar():
 
 @app.route('/adicionar-carrinho', methods=['POST'])
 def adicionar_carrinho():
+    if 'user' not in session:
+        return jsonify({'status': 'ok', 'mensagem': 'Faça o login antes de fazer um pedido!'}), 200
+    
     data = request.get_json()
     nomePizza = data.get("pizza")
     precoPizza = data.get("preco")
@@ -245,7 +249,7 @@ def user():
     
     user = session.get('user')
 
-    return render_template("user.html", user=user)
+    return render_template("user.html", user=user, carrinho=session.get("carrinho", []))
 
 
 @app.route('/userEdit', methods=['POST'])
