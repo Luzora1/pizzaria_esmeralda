@@ -176,6 +176,66 @@
           <script></script>
         </div>
       </div>
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasExample"
+        aria-controls="offcanvasExample"
+        style="width: 25%"
+      >
+        Meus pedidos 🍕
+      </button>
+
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Pedidos</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          {% if pedidosUser =={}%}
+          <p class="text-center">Você não tem pedidos</p>
+          {% endif %} {% for key, pedido in pedidosUser.items() %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
+              <ul class="mb-2">
+                {% for pizza in pedido.pizzas %}
+                <li>{{ pizza }}</li>
+                {% endfor %}
+              </ul>
+
+              <p class="mb-1">
+                📍 <strong>Endereço:</strong> {{ pedido.endereco }}
+              </p>
+              <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
+              <p class="mb-1">
+                📦 <strong>Status:</strong> {{ pedido.status }}
+              </p>
+              <p class="mb-0">
+                💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+              </p>
+              <form action="/cancelarPedido" method="POST">
+                <input type="hidden" name="pedido_id" value="{{ key }}" />
+                <button type="submit" class="btn btn-primary mt-2">
+                  Cancelar Pedido
+                </button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </main>
 
     <footer id="footer" class="footer">

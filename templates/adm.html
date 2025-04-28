@@ -91,6 +91,9 @@
                   📍 <strong>Endereço:</strong> {{ pedido.endereco }}
                 </p>
                 <p class="mb-1">
+                  ⏱️ <strong>Data:</strong> {{ pedido.data }}
+                </p>
+                <p class="mb-1">
                   ✉️ <strong>Email:</strong> {{ pedido.email }}
                 </p>
                 <p class="mb-1">
@@ -106,6 +109,15 @@
                     value="{{ pedido_id }}"
                   />
                   <input type="hidden" name="pedido_type" value="upgrade" />
+                  <label for="motoboys">Motoboy responsável:</label>
+                  <select id="motoboys" name="motoboys">
+                    {% for  motoboy in motoboys %}
+                    <option value="{{ motoboy }}">{{ motoboy }}</option>
+                    {% endfor %}
+                    {% if motoboys|length == 0 %}
+                    <option value="noMotoboy">Nenhum motoboy disponível</option>
+                    {% endif %}
+                  </select>
                   <button type="submit" class="btn btn-primary">
                     ENVIAR PEDIDO
                   </button>
@@ -135,6 +147,9 @@
                   📍 <strong>Endereço:</strong> {{ pedido.endereco }}
                 </p>
                 <p class="mb-1">
+                  ⏱️ <strong>Data:</strong> {{ pedido.data }}
+                </p>
+                <p class="mb-1">
                   ✉️ <strong>Email:</strong> {{ pedido.email }}
                 </p>
                 <p class="mb-1">
@@ -142,6 +157,9 @@
                 </p>
                 <p class="mb-0">
                   💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+                </p>
+                <p class="mb-0">
+                  🛵 <strong>Motoboy Responsável:</strong> {{ pedido.motoboy }}
                 </p>
                 <form action="/atualizarPedido" method="post" class="mt-2">
                   <input
@@ -161,7 +179,6 @@
                     value="{{ pedido_id }}"
                   />
                   <input type="hidden" name="pedido_type" value="downgrade" />
-
                   <button type="submit" class="btn btn-primary">
                     VOLTAR PARA PENDENTE
                   </button>
@@ -190,6 +207,9 @@
                   📍 <strong>Endereço:</strong> {{ pedido.endereco }}
                 </p>
                 <p class="mb-1">
+                  ⏱️ <strong>Data:</strong> {{ pedido.data }}
+                </p>
+                <p class="mb-1">
                   ✉️ <strong>Email:</strong> {{ pedido.email }}
                 </p>
                 <p class="mb-1">
@@ -197,6 +217,9 @@
                 </p>
                 <p class="mb-0">
                   💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+                </p>
+                <p class="mb-0">
+                  🛵 <strong>Motoboy Responsável:</strong> {{ pedido.motoboy }}
                 </p>
                 <form action="/atualizarPedido" method="post" class="mt-2">
                   <input
@@ -226,6 +249,21 @@
               {% endif %} {% endfor %}
             </div>
           </div>
+        </div>
+        <div class="col-12">
+          <h2>Adicionar Motoboy</h2>
+          <form action="/adicionarMotoboy" method="post">
+            <div class="mb-3">
+              <label for="motoboy_nome" class="form-label">Nome</label>
+              <input
+                type="text"
+                class="form-control"
+                id="motoboy_nome"
+                name="motoboy_nome"
+                required>
+              <button type="submit" class="btn btn-primary mt-2">
+                Adicionar Motoboy
+              </button>
         </div>
       </div>
     </main>

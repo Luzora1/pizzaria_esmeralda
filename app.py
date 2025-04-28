@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, session, redirect, url_for, render_template, request
+from flask import Flask, render_template, jsonify, session, redirect, url_for, render_template, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
 
@@ -12,9 +12,10 @@ app.secret_key = "sua_chave_secreta"
 
 
 # Banco falso esse aqui, só para teste
-usuarios = {'emailteste@email.com': {'nome': 'Eumesmo', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 50, 'endereco': 'Rua teste, 123','email': 'emailteste@email.com'}}
+usuarios = {'emailteste@email.com': {'nome': 'Eumesmo', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 50000, 'endereco': 'Rua teste, 123','email': 'emailteste@email.com'}}
 admin = {'ADM-1': {'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85'}}
 pedidos = {} 
+motoboys = []
 id_contador  = 1
 
 @app.route('/loginRegister')
@@ -204,6 +205,7 @@ def deletar_item():
 
 @app.route('/pagar', methods=['POST'])
 def pagar():
+    print("Entrou na rota de pagamento")
     global id_contador  # Para acessar e modificar a variável global
     data = request.get_json()
     total = data.get('total')
@@ -249,7 +251,9 @@ def user():
     
     user = session.get('user')
 
-    return render_template("user.html", user=user, carrinho=session.get("carrinho", []))
+    pedidosUser = {k: v for k, v in pedidos.items() if v['email'] == user["email"]}
+    print(pedidosUser)
+    return render_template("user.html", user=user, carrinho=session.get("carrinho", []), pedidosUser=pedidosUser)
 
 
 @app.route('/userEdit', methods=['POST'])
@@ -266,6 +270,25 @@ def userEdit():
     user = session.get('user')
 
     return render_template("user.html", user=user)
+
+@app.route('/cancelarPedido', methods=['POST'])
+def cancelarPedido():
+    idPedido = request.form["pedido_id"]
+    user = session.get('user')
+
+    # Verificando se o pedido existe
+    if int(idPedido) in pedidos:
+        del pedidos[int(idPedido)]  # Removendo o pedido do dicionário
+        flash("Pedido cancelado com sucesso!", "success")
+    else:
+        flash("Pedido não encontrado.", "error")
+
+    # Atualizando os pedidos do usuário após a exclusão
+    pedidosUser = {k: v for k, v in pedidos.items() if v['email'] == user["email"]}
+
+    return render_template("user.html", user=user, carrinho=session.get("carrinho", []), pedidosUser=pedidosUser)
+
+
 
 
 @app.route('/shop')
@@ -319,7 +342,8 @@ def adm():
     if not session.get('liberar_adm'):
         return redirect('/loginAdmin')  # Ou retornar 403
     session.pop('liberar_adm')  # remove o acesso após uso
-    return render_template('adm.html', pedidos=pedidos)
+    print(pedidos)
+    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
 
 @app.route('/atualizarPedido', methods=['POST'])
 def atualizarPedido():
@@ -327,12 +351,22 @@ def atualizarPedido():
     id = request.form['pedido_id']
     pedidoType = request.form['pedido_type']
 
+    if request.form.get('motoboys'):
+        motoboy = request.form['motoboys']
+    else:
+        motoboy = ""
+
+
+    if motoboy == "noMotoboy":
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+
+    print(pedidos)
     if pedidoType == "upgrade":
         for pedido in pedidos:
             if pedido == int(id):
-                print(pedido)
                 # Verificando o status atual e atualizando ou removendo conforme necessário
                 if pedidos[pedido]["status"] == "Pendente":
+                    pedidos[pedido]["motoboy"] = motoboy
                     pedidos[pedido]["status"] = "Enviado"
                 elif pedidos[pedido]["status"] == "Enviado":
                     pedidos[pedido]["status"] = "Finalizado"
@@ -354,8 +388,24 @@ def atualizarPedido():
                 else:
                     print("Status inválido", pedidos[pedido]["status"])
                 break
+    
+    print(pedidos)            
+    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
 
-    return render_template('adm.html', pedidos=pedidos)
+@app.route('/adicionarMotoboy', methods=['POST'])
+def adicionarMotoboy():
+    
+    nomeMotoboy = request.form["motoboy_nome"]
+
+    if nomeMotoboy in motoboys:
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+    else:
+        motoboys.append(nomeMotoboy) 
+
+
+    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

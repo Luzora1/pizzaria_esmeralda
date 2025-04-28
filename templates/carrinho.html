@@ -168,9 +168,8 @@
 
         function fazerPagamento() {
           // Pega o valor total diretamente da página
-          const totalText = document.querySelector("#total-esmeraldas").textContent;
-          const total = parseFloat(totalText.replace("E$", "").trim());
-
+          const total = {{ total }};
+        
           fetch("/pagar", {
             method: "POST",
             headers: {
