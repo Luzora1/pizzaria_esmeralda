@@ -69,6 +69,7 @@
           SAIR DO PAINEL DE ADMIN
         </button>
       </form>
+
       <div class="container">
         <div class="row">
           <!-- Coluna de Pedidos Pendentes -->
@@ -79,20 +80,16 @@
               == 'Pendente' %}
               <div class="list-group-item mb-3 border rounded shadow-sm">
                 <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
-
                 <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
                 <ul class="mb-2">
                   {% for pizza in pedido.pizzas %}
                   <li>{{ pizza }}</li>
                   {% endfor %}
                 </ul>
-
                 <p class="mb-1">
                   📍 <strong>Endereço:</strong> {{ pedido.endereco }}
                 </p>
-                <p class="mb-1">
-                  ⏱️ <strong>Data:</strong> {{ pedido.data }}
-                </p>
+                <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
                 <p class="mb-1">
                   ✉️ <strong>Email:</strong> {{ pedido.email }}
                 </p>
@@ -102,6 +99,7 @@
                 <p class="mb-0">
                   💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
                 </p>
+
                 <form action="/atualizarPedido" method="post" class="mt-2">
                   <input
                     type="hidden"
@@ -110,11 +108,14 @@
                   />
                   <input type="hidden" name="pedido_type" value="upgrade" />
                   <label for="motoboys">Motoboy responsável:</label>
-                  <select id="motoboys" name="motoboys">
-                    {% for  motoboy in motoboys %}
+                  <select
+                    id="motoboys"
+                    name="motoboys"
+                    class="form-select mb-2"
+                  >
+                    {% for motoboy in motoboys %}
                     <option value="{{ motoboy }}">{{ motoboy }}</option>
-                    {% endfor %}
-                    {% if motoboys|length == 0 %}
+                    {% endfor %} {% if motoboys|length == 0 %}
                     <option value="noMotoboy">Nenhum motoboy disponível</option>
                     {% endif %}
                   </select>
@@ -135,20 +136,16 @@
               == 'Enviado' %}
               <div class="list-group-item mb-3 border rounded shadow-sm">
                 <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
-
                 <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
                 <ul class="mb-2">
                   {% for pizza in pedido.pizzas %}
                   <li>{{ pizza }}</li>
                   {% endfor %}
                 </ul>
-
                 <p class="mb-1">
                   📍 <strong>Endereço:</strong> {{ pedido.endereco }}
                 </p>
-                <p class="mb-1">
-                  ⏱️ <strong>Data:</strong> {{ pedido.data }}
-                </p>
+                <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
                 <p class="mb-1">
                   ✉️ <strong>Email:</strong> {{ pedido.email }}
                 </p>
@@ -161,6 +158,7 @@
                 <p class="mb-0">
                   🛵 <strong>Motoboy Responsável:</strong> {{ pedido.motoboy }}
                 </p>
+
                 <form action="/atualizarPedido" method="post" class="mt-2">
                   <input
                     type="hidden"
@@ -187,28 +185,25 @@
               {% endif %} {% endfor %}
             </div>
           </div>
-          <!-- Coluna de Pedidos Enviados -->
+
+          <!-- Coluna de Pedidos Finalizados -->
           <div class="col-md-4">
-            <h2 class="mb-4">Entregados/finalizados</h2>
+            <h2 class="mb-4">Entregados/Finalizados</h2>
             <div class="list-group">
               {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
               == 'Finalizado' %}
               <div class="list-group-item mb-3 border rounded shadow-sm">
                 <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
-
                 <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
                 <ul class="mb-2">
                   {% for pizza in pedido.pizzas %}
                   <li>{{ pizza }}</li>
                   {% endfor %}
                 </ul>
-
                 <p class="mb-1">
                   📍 <strong>Endereço:</strong> {{ pedido.endereco }}
                 </p>
-                <p class="mb-1">
-                  ⏱️ <strong>Data:</strong> {{ pedido.data }}
-                </p>
+                <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
                 <p class="mb-1">
                   ✉️ <strong>Email:</strong> {{ pedido.email }}
                 </p>
@@ -221,6 +216,7 @@
                 <p class="mb-0">
                   🛵 <strong>Motoboy Responsável:</strong> {{ pedido.motoboy }}
                 </p>
+
                 <form action="/atualizarPedido" method="post" class="mt-2">
                   <input
                     type="hidden"
@@ -228,7 +224,6 @@
                     value="{{ pedido_id }}"
                   />
                   <input type="hidden" name="pedido_type" value="upgrade" />
-
                   <button type="submit" class="btn btn-danger">
                     DELETAR PEDIDO
                   </button>
@@ -240,7 +235,6 @@
                     value="{{ pedido_id }}"
                   />
                   <input type="hidden" name="pedido_type" value="downgrade" />
-
                   <button type="submit" class="btn btn-success">
                     VOLTAR PARA ENVIADO
                   </button>
@@ -250,7 +244,9 @@
             </div>
           </div>
         </div>
-        <div class="col-12">
+
+        <!-- Adicionar Motoboy -->
+        <div class="col-12 mt-5">
           <h2>Adicionar Motoboy</h2>
           <form action="/adicionarMotoboy" method="post">
             <div class="mb-3">
@@ -260,13 +256,17 @@
                 class="form-control"
                 id="motoboy_nome"
                 name="motoboy_nome"
-                required>
-              <button type="submit" class="btn btn-primary mt-2">
-                Adicionar Motoboy
-              </button>
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">
+              Adicionar Motoboy
+            </button>
+          </form>
         </div>
       </div>
     </main>
+
     <!-- Scroll Top -->
     <a
       href="#"

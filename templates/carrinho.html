@@ -80,11 +80,10 @@
               <li><a href="{{ url_for('home') }}#about">Sobre</a></li>
               <li><a href="{{ url_for('home') }}#menu">Menu</a></li>
               <li><a href="{{ url_for('home') }}#crafting">Crafting</a></li>
-              <li><a href="{{ url_for('home') }}#events">Eventos</a></li>
               <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
               <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
               <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
-              <li ><a class="esmeraldas" href="/shop">+ Esmeraldas</a></li>
+              <li ><a class="cta-btn" href="/shop">+ Esmeraldas</a></li>
   
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -127,7 +126,7 @@
           <tr>
             <th scope="row">{{ loop.index }}</th>
             <td>{{ i[0] }}</td>
-            <td>{{ i[1] }}</td>
+            <td>{{ '%.2f' % i[1] }}</td>
             <td><button class="btn btn-danger" onclick="deletarItemCarrinho('{{ i[0] }}')">DELETAR</button></td>
           </tr>
           {% endfor %}

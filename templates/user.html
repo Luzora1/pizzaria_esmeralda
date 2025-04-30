@@ -80,10 +80,10 @@
               <li><a href="{{ url_for('home') }}#about">Sobre</a></li>
               <li><a href="{{ url_for('home') }}#menu">Menu</a></li>
               <li><a href="{{ url_for('home') }}#crafting">Crafting</a></li>
-              <li><a href="{{ url_for('home') }}#events">Eventos</a></li>
               <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
               <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
               <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
+              <li><a class="cta-btn" href="/shop">+ Esmeraldas</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
@@ -123,121 +123,139 @@
         </div>
       </div>
     </header>
-
-    <main class="row main user-main">
-      <div class="user-info col-6">
-        <div class="container">
-          <h1>Olá, {{ user.nome }}</h1>
-          <p>
-            Você tem {{ '%.2f' % user.esmeraldas }} esmeraldas
-            <a href="/shop">Adquirir mais esmeraldas!</a>
-          </p>
-          <p>Seu nível é {{ user.xp // 100 }}</p>
-          <p>Seu xp total é {{ user.xp }}</p>
-          <a href="/logout">Sair</a>
-        </div>
-      </div>
-      <div class="user-edit col-6">
-        <div class="container">
-          <h2>Editar informações</h2>
-          <form action="/userEdit" method="POST">
-            <div class="mb-3">
-              <label for="nome" class="form-label">Nome</label>
-              <input
-                type="text"
-                class="form-control"
-                id="nome"
-                name="nome"
-                value="{{ user.nome }}"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                value="{{ user.email }}"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Endereço</label>
-              <input
-                type="text"
-                class="form-control"
-                id="endereco"
-                name="endereco"
-                value="{{ user.endereco }}"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Editar</button>
-          </form>
-          <script></script>
-        </div>
-      </div>
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasExample"
-        aria-controls="offcanvasExample"
-        style="width: 25%"
-      >
-        Meus pedidos 🍕
-      </button>
-
-      <div
-        class="offcanvas offcanvas-start"
-        tabindex="-1"
-        id="offcanvasExample"
-        aria-labelledby="offcanvasExampleLabel"
-      >
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Pedidos</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="offcanvas-body">
-          {% if pedidosUser =={}%}
-          <p class="text-center">Você não tem pedidos</p>
-          {% endif %} {% for key, pedido in pedidosUser.items() %}
-          <div class="card mb-3">
-            <div class="card-body">
-              <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
-              <ul class="mb-2">
-                {% for pizza in pedido.pizzas %}
-                <li>{{ pizza }}</li>
-                {% endfor %}
-              </ul>
-
-              <p class="mb-1">
-                📍 <strong>Endereço:</strong> {{ pedido.endereco }}
-              </p>
-              <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
-              <p class="mb-1">
-                📦 <strong>Status:</strong> {{ pedido.status }}
-              </p>
-              <p class="mb-0">
-                💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
-              </p>
-              <form action="/cancelarPedido" method="POST">
-                <input type="hidden" name="pedido_id" value="{{ key }}" />
-                <button type="submit" class="btn btn-primary mt-2">
-                  Cancelar Pedido
-                </button>
-              </form>
+    <div class="user-main">
+      <main class="container mt-5">
+        <div class="row">
+          <!-- Informações do Usuário -->
+          <div class="col-md-6 mb-4">
+            <div class="card shadow">
+              <div class="card-body">
+                <h1 class="card-title">Olá, {{ user.nome }}</h1>
+                <p>
+                  Você tem
+                  <strong>{{ '%.2f' % user.esmeraldas }}</strong> esmeraldas
+                  <a href="/shop" class="ms-2 text-decoration-none"
+                    >Adquirir mais!</a
+                  >
+                </p>
+                <p>Seu nível é <strong>{{ user.xp // 100 }}</strong></p>
+                <p>Seu XP total é <strong>{{ user.xp }}</strong></p>
+                <a href="/logout" class="btn btn-outline-danger mt-2">Sair</a>
+              </div>
             </div>
           </div>
-          {% endfor %}
-        </div>
-      </div>
-    </main>
 
+          <!-- Edição de Informações -->
+          <div class="col-md-6 mb-4">
+            <div class="card shadow">
+              <div class="card-body">
+                <h2 class="card-title mb-3">Editar Informações</h2>
+                <form action="/userEdit" method="POST">
+                  <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nome"
+                      name="nome"
+                      value="{{ user.nome }}"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      value="{{ user.email }}"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="endereco"
+                      name="endereco"
+                      value="{{ user.endereco }}"
+                    />
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100">
+                    Salvar Alterações
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botão Offcanvas -->
+        <div class="text-center mt-4">
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample"
+            aria-controls="offcanvasExample"
+          >
+            Meus pedidos 🍕
+          </button>
+        </div>
+
+        <!-- Offcanvas Pedidos -->
+        <div
+          class="offcanvas offcanvas-start"
+          tabindex="-1"
+          id="offcanvasExample"
+          aria-labelledby="offcanvasExampleLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Pedidos</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            {% if pedidosUser == {} %}
+            <p class="text-center">Você não tem pedidos</p>
+            {% endif %} {% for key, pedido in pedidosUser.items() %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <p class="fw-bold mb-1">🍕 <strong>Pizzas:</strong></p>
+                <ul class="mb-2">
+                  {% for pizza in pedido.pizzas %}
+                  <li>{{ pizza }}</li>
+                  {% endfor %}
+                </ul>
+
+                <p class="mb-1">
+                  📍 <strong>Endereço:</strong> {{ pedido.endereco }}
+                </p>
+                <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
+                <p class="mb-1">
+                  📦 <strong>Status:</strong> {{ pedido.status }}
+                </p>
+                <p class="mb-0">
+                  💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
+                </p>
+
+                <form action="/cancelarPedido" method="POST">
+                  <input type="hidden" name="pedido_id" value="{{ key }}" />
+                  <button type="submit" class="btn btn-danger mt-2">
+                    Cancelar Pedido
+                  </button>
+                </form>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </main>
+    </div>
     <footer id="footer" class="footer">
       <div class="container footer-top">
         <div class="row gy-4">

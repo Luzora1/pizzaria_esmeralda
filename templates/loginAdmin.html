@@ -69,23 +69,32 @@
         <div class="row mt-4">
           <!-- Login -->
           <div class="col-md-12">
-            <h4>Login</h4>
-            <form action="/loginAdmAuthenticator" method="post">
-              <div class="form-group mb-2">
-                <label for="nome">Nome:</label>
-                <input type="text" name="nome" class="form-control" required />
-              </div>
-              <div class="form-group mb-2">
-                <label for="senha">Senha:</label>
-                <input
-                  type="password"
-                  name="senha"
-                  class="form-control"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">Entrar</button>
-            </form>
+            <div class="card shadow p-4">
+              <h4 class="text-center mb-4">Login de Administrador</h4>
+              <form action="/loginAdmAuthenticator" method="post">
+                <div class="mb-3">
+                  <label for="nome" class="form-label">Nome:</label>
+                  <input
+                    type="text"
+                    name="nome"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="senha" class="form-label">Senha:</label>
+                  <input
+                    type="password"
+                    name="senha"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Entrar
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>

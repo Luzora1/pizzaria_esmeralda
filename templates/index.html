@@ -58,7 +58,6 @@
             <li><a href="{{ url_for('home') }}#about">Sobre</a></li>
             <li><a href="{{ url_for('home') }}#menu">Menu</a></li>
             <li><a href="{{ url_for('home') }}#crafting">Crafting</a></li>
-            <li><a href="{{ url_for('home') }}#events">Eventos</a></li>
             <li><a href="{{ url_for('home') }}#chefs">Chefs</a></li>
             <li><a href="{{ url_for('home') }}#gallery">Galeria</a></li>
             <li><a href="{{ url_for('home') }}#contact">Contato</a></li>
@@ -106,12 +105,12 @@
 
   </header>
 
-  <main class="main">
+  <main class="main" style="margin-top: 0;">
 
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="../static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+      <img src="../static/assets/img/hero-bg.png" alt="" data-aos="fade-in">
 
       <div class="container">
         <div class="row">
@@ -177,7 +176,7 @@
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="card-item">
               <span>01</span>
-              <h4><a href="" class="stretched-link">pizzas temáticas</a></h4>
+              <h4><a href="#menu" class="stretched-link">pizzas temáticas</a></h4>
               <p>Somos os únicos que oferecemos pizzas quadradas!</p>
             </div>
           </div><!-- Card Item -->
@@ -185,7 +184,8 @@
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
             <div class="card-item">
               <span>02</span>
-              <h4><a href="" class="stretched-link">Entrega Rápida</a></h4>
+              <h4><a href="#menu
+                " class="stretched-link">Entrega Rápida</a></h4>
               <p>Em menos de 20 minutos sua pizza sai do forno para sua casa</p>
             </div>
           </div><!-- Card Item -->
@@ -193,7 +193,7 @@
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
             <div class="card-item">
               <span>03</span>
-              <h4><a href="" class="stretched-link">Crafting de pizzas</a></h4>
+              <h4><a href="#crafting" class="stretched-link">Crafting de pizzas</a></h4>
               <p>Não se prenda ao menu, crie sua própia pizza!</p>
               <a href="#crafting" class="cta-btn var-1">Crafite sua pizza!</a>
             </div>
@@ -243,7 +243,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
             <img src="../static/assets/img/menu/calabresa.png" class="menu-img calabresa" alt="">
             <div class="menu-content">
-              <a href="#">Calabresa</a><span>E${{ '%.2f' % (45 * (1 - desconto)) }}</span>
+              <a href="#">Calabresa</a><span>{% if desconto %} <s>E$45.00</s>---{% endif %}<u>E${{ '%.2f' %  (45 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Coberta com calabresa fatiada e cebola roxa.
@@ -254,7 +254,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
             <img src="../static/assets/img/menu/camarao.png" class="menu-img camarao" alt="">
             <div class="menu-content">
-              <a href="#">Camarão com Catupiry</a><span>E${{ '%.2f' % (50 * (1 - desconto)) }}</span>
+              <a href="#">Camarão com Catupiry</a><span>{% if desconto %} <s>E$50.00</s>---{% endif %}<u>E${{ '%.2f' %  (50 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Uma combinação refinada de camarão e catupiry cremoso.
@@ -265,7 +265,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
             <img src="../static/assets/img/menu/frango-catupiry.png" class="menu-img frango-catupiry" alt="">
             <div class="menu-content">
-              <a href="#">Frango com Catupiry</a><span>E${{ '%.2f' % (40 * (1 - desconto)) }}</span>
+              <a href="#">Frango com Catupiry</a><span>{% if desconto %} <s>E$40.00</s>---{% endif %}<u>E${{ '%.2f' %  (40 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Frango desfiado com o tradicional requeijão catupiry.
@@ -276,18 +276,18 @@
           <div class="col-lg-6 menu-item isotope-item filter-doces">
             <img src="../static/assets/img/menu/chocolate.png" class="menu-img chocolate" alt="">
             <div class="menu-content">
-              <a href="#">Chocolate com Morango</a><span>E${{ '%.2f' % (34 * (1 - desconto)) }}</span>
+              <a href="#">Chocolate com Morango</a><span>{% if desconto %} <s>E$34.00</s>---{% endif %}<u>E${{ '%.2f' %  (34 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Cobertura de chocolate ao leite e morangos frescos.
-              <button class="btn-addCart" onClick="addNoCarrinho('chocolate-morango', {{ (42 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
+              <button class="btn-addCart" onClick="addNoCarrinho('chocolate-morango', {{ (34 * (1 - desconto)) | round(2) }})">Add no <br>carrinho</button>
             </div>
           </div><!-- Menu Item -->
         
           <div class="col-lg-6 menu-item isotope-item filter-especiais">
             <img src="../static/assets/img/menu/quatro-queijos.png" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Quatro Queijos</a><span>E${{ '%.2f' % (42 * (1 - desconto)) }}</span>
+              <a href="#">Quatro Queijos</a><span>{% if desconto %} <s>E$42.00</s>---{% endif %}<u>E${{ '%.2f' %  (42 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Mussarela, gorgonzola, provolone e parmesão.
@@ -298,7 +298,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-salgadas">
             <img src="../static/assets/img/menu/portuguesa.png" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Portuguesa</a><span>E${{ '%.2f' % (38 * (1 - desconto)) }}</span>
+              <a href="#">Portuguesa</a><span>{% if desconto %} <s>E$38.00</s>---{% endif %}<u>E${{ '%.2f' %  (38 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Presunto, ovo, cebola, azeitonas e pimentão. 
@@ -309,7 +309,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-doces">
             <img src="../static/assets/img/menu/banana-canela.png" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Banana com Canela</a><span>E${{ '%.2f' % (30 * (1 - desconto)) }}</span>
+              <a href="#">Banana com Canela</a><span>{% if desconto %} <s>E$30.00</s>---{% endif %}<u>E${{ '%.2f' %  (30 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Rodelas de banana com açúcar e canela.
@@ -320,7 +320,7 @@
           <div class="col-lg-6 menu-item isotope-item filter-doces">
             <img src="../static/assets/img/menu/confete.png" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Chocolate com Confete</a><span>E${{ '%.2f' % (32 * (1 - desconto)) }}</span>
+              <a href="#">Chocolate com Confete</a><span>{% if desconto %} <s>E$32.00</s>---{% endif %}<u>E${{ '%.2f' %  (32 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Cobertura de chocolate e confeitos coloridos.
@@ -336,7 +336,7 @@
             alt="">
             <div class="menu-content">
               <a href="#">Trufada Especial</a>
-              <span>E${{ '%.2f' % (45 * (1 - desconto)) }}</span>
+              <span>{% if desconto %} <s>E$45.00</s>---{% endif %}<u>E${{ '%.2f' %  (45 * (1 - desconto)) }}</u></span>
             </div>
             <div class="menu-ingredients">
               Massa fina com recheio trufado e toque de avelã.
@@ -546,114 +546,6 @@
     
     <!-- /Specials Section -->
 
-    <!-- Events Section -->
-    <section id="events" class="events section">
-
-      <img class="slider-bg" src="../static/assets/img/events-bg.jpg" alt="" data-aos="fade-in">
-    
-      <div class="container">
-    
-        <div class="swiper init-swiper" data-aos="fade-up" data-aos-delay="100">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              }
-            }
-          </script>
-          <div class="swiper-wrapper">
-    
-            <div class="swiper-slide">
-              <div class="row gy-4 event-item">
-                <div class="col-lg-6">
-                  <img src="../static/assets/img/events-slider/events-slider-1.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Festa de Aniversário</h3>
-                  <div class="price">
-                    <p><span>$189</span></p>
-                  </div>
-                  <p class="fst-italic">
-                    Celebre seu aniversário com pizzas temáticas e diversão para todos os convidados. Uma experiência única em um ambiente inspirado no Minecraft.
-                  </p>
-                  <ul>
-                    <li><i class="bi bi-check2-circle"></i> Pizzas personalizadas para todos os gostos.</li>
-                    <li><i class="bi bi-check2-circle"></i> Ambiente temático com decoração de Minecraft.</li>
-                    <li><i class="bi bi-check2-circle"></i> Atividades e entretenimento para crianças e adultos.</li>
-                  </ul>
-                  <p>
-                    Traga sua turma para uma festa recheada de sabor e diversão, com nossas pizzas exclusivas e um ambiente que vai transportar todos para o mundo do Minecraft!
-                  </p>
-                </div>
-              </div>
-            </div><!-- End Slider item -->
-    
-            <div class="swiper-slide">
-              <div class="row gy-4 event-item">
-                <div class="col-lg-6">
-                  <img src="../static/assets/img/events-slider/events-slider-2.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Festas Privadas</h3>
-                  <div class="price">
-                    <p><span>$290</span></p>
-                  </div>
-                  <p class="fst-italic">
-                    Planeje sua festa privada com pizzas artesanais e um ambiente único, perfeito para grupos fechados que desejam uma experiência exclusiva.
-                  </p>
-                  <ul>
-                    <li><i class="bi bi-check2-circle"></i> Pizzas personalizadas de acordo com sua preferência.</li>
-                    <li><i class="bi bi-check2-circle"></i> Serviço exclusivo em um espaço dedicado.</li>
-                    <li><i class="bi bi-check2-circle"></i> Decoração temática e ambiente Minecraft.</li>
-                  </ul>
-                  <p>
-                    Tenha a sua festa privada com a qualidade e o sabor que você merece. Com nossas pizzas temáticas e um ambiente único, sua festa será inesquecível!
-                  </p>
-                </div>
-              </div>
-            </div><!-- End Slider item -->
-    
-            <div class="swiper-slide">
-              <div class="row gy-4 event-item">
-                <div class="col-lg-6">
-                  <img src="../static/assets/img/events-slider/events-slider-3.jpg" class="img-fluid" alt="">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Festas Personalizadas</h3>
-                  <div class="price">
-                    <p><span>$99</span></p>
-                  </div>
-                  <p class="fst-italic">
-                    Ofereça uma festa com pizzas personalizadas que atendem aos gostos de todos os convidados, com direito a decoração de Minecraft.
-                  </p>
-                  <ul>
-                    <li><i class="bi bi-check2-circle"></i> Escolha o sabor e o estilo de pizza.</li>
-                    <li><i class="bi bi-check2-circle"></i> Decoração personalizada de acordo com sua festa.</li>
-                    <li><i class="bi bi-check2-circle"></i> Entretenimento temático para todas as idades.</li>
-                  </ul>
-                  <p>
-                    Torne sua festa ainda mais especial com pizzas temáticas e uma decoração que fará todos se sentirem em um mundo Minecraft! Perfeito para todas as idades.
-                  </p>
-                </div>
-              </div>
-            </div><!-- End Slider item -->
-    
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-    
-      </div>
-    
-    </section>
-    <!-- /Events Section -->
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">

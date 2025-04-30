@@ -61,7 +61,7 @@
 }
 
 .user-main {
-  margin-top: 20%;
+  margin-top: 10%;
 }
 
 .user-main a {
@@ -69,16 +69,7 @@
   text-decoration: none;
   font-size: 10px;
 }
-
-.shop-main {
-  margin-top: 20%;
-}
-
-.adm-main {
-  margin-top: 20%;
-}
-
-.carrinho-main {
+.main {
   margin: 10%;
 }
 
