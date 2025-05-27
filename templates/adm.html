@@ -76,10 +76,10 @@
           <div class="col-md-4">
             <h2 class="mb-4">Pedidos Pendentes</h2>
             <div class="list-group">
-              {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
-              == 'Pendente' %}
+              {% if pedido != None %}
+
               <div class="list-group-item mb-3 border rounded shadow-sm">
-                <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
+                <h5 class="mb-2">Pedido #{{ pedido.id }}</h5>
                 <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
                 <ul class="mb-2">
                   {% for pizza in pedido.pizzas %}
@@ -100,7 +100,7 @@
                   💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
                 </p>
 
-                <form action="/atualizarPedido" method="post" class="mt-2">
+                <form action="/EnviarPedido" method="post" class="mt-2">
                   <input
                     type="hidden"
                     name="pedido_id"
@@ -124,127 +124,9 @@
                   </button>
                 </form>
               </div>
-              {% endif %} {% endfor %}
+              {% endif %}
             </div>
           </div>
-
-          <!-- Coluna de Pedidos Enviados -->
-          <div class="col-md-4">
-            <h2 class="mb-4">Enviados</h2>
-            <div class="list-group">
-              {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
-              == 'Enviado' %}
-              <div class="list-group-item mb-3 border rounded shadow-sm">
-                <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
-                <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
-                <ul class="mb-2">
-                  {% for pizza in pedido.pizzas %}
-                  <li>{{ pizza }}</li>
-                  {% endfor %}
-                </ul>
-                <p class="mb-1">
-                  📍 <strong>Endereço:</strong> {{ pedido.endereco }}
-                </p>
-                <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
-                <p class="mb-1">
-                  ✉️ <strong>Email:</strong> {{ pedido.email }}
-                </p>
-                <p class="mb-1">
-                  📦 <strong>Status:</strong> {{ pedido.status }}
-                </p>
-                <p class="mb-0">
-                  💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
-                </p>
-                <p class="mb-0">
-                  🛵 <strong>Motoboy Responsável:</strong> {{ pedido.motoboy }}
-                </p>
-
-                <form action="/atualizarPedido" method="post" class="mt-2">
-                  <input
-                    type="hidden"
-                    name="pedido_id"
-                    value="{{ pedido_id }}"
-                  />
-                  <input type="hidden" name="pedido_type" value="upgrade" />
-                  <button type="submit" class="btn btn-success">
-                    FINALIZAR PEDIDO
-                  </button>
-                </form>
-                <form action="/atualizarPedido" method="post" class="mt-2">
-                  <input
-                    type="hidden"
-                    name="pedido_id"
-                    value="{{ pedido_id }}"
-                  />
-                  <input type="hidden" name="pedido_type" value="downgrade" />
-                  <button type="submit" class="btn btn-primary">
-                    VOLTAR PARA PENDENTE
-                  </button>
-                </form>
-              </div>
-              {% endif %} {% endfor %}
-            </div>
-          </div>
-
-          <!-- Coluna de Pedidos Finalizados -->
-          <div class="col-md-4">
-            <h2 class="mb-4">Entregados/Finalizados</h2>
-            <div class="list-group">
-              {% for pedido_id, pedido in pedidos.items() %} {% if pedido.status
-              == 'Finalizado' %}
-              <div class="list-group-item mb-3 border rounded shadow-sm">
-                <h5 class="mb-2">Pedido #{{ pedido_id }}</h5>
-                <p class="mb-1 fw-bold">🍕 <strong>Pizzas:</strong></p>
-                <ul class="mb-2">
-                  {% for pizza in pedido.pizzas %}
-                  <li>{{ pizza }}</li>
-                  {% endfor %}
-                </ul>
-                <p class="mb-1">
-                  📍 <strong>Endereço:</strong> {{ pedido.endereco }}
-                </p>
-                <p class="mb-1">⏱️ <strong>Data:</strong> {{ pedido.data }}</p>
-                <p class="mb-1">
-                  ✉️ <strong>Email:</strong> {{ pedido.email }}
-                </p>
-                <p class="mb-1">
-                  ✅ <strong>Status:</strong> {{ pedido.status }}
-                </p>
-                <p class="mb-0">
-                  💰 <strong>Total:</strong> R$ {{ '%.2f' % pedido.preco }}
-                </p>
-                <p class="mb-0">
-                  🛵 <strong>Motoboy Responsável:</strong> {{ pedido.motoboy }}
-                </p>
-
-                <form action="/atualizarPedido" method="post" class="mt-2">
-                  <input
-                    type="hidden"
-                    name="pedido_id"
-                    value="{{ pedido_id }}"
-                  />
-                  <input type="hidden" name="pedido_type" value="upgrade" />
-                  <button type="submit" class="btn btn-danger">
-                    DELETAR PEDIDO
-                  </button>
-                </form>
-                <form action="/atualizarPedido" method="post" class="mt-2">
-                  <input
-                    type="hidden"
-                    name="pedido_id"
-                    value="{{ pedido_id }}"
-                  />
-                  <input type="hidden" name="pedido_type" value="downgrade" />
-                  <button type="submit" class="btn btn-success">
-                    VOLTAR PARA ENVIADO
-                  </button>
-                </form>
-              </div>
-              {% endif %} {% endfor %}
-            </div>
-          </div>
-        </div>
-
         <!-- Adicionar Motoboy -->
         <div class="col-12 mt-5">
           <h2>Adicionar Motoboy</h2>

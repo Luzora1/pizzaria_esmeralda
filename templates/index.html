@@ -453,12 +453,12 @@
     
           if (ev.target.classList.contains("grid-cell") && ev.target.children.length === 0) {
             ev.target.appendChild(draggedItem);
-            atualizarItensNoGrid(); // 🆕 Atualiza nomes ao adicionar
+            atualizarItensNoGrid(); 
           }
         }
     
         function getGridState() {
-          const cells = document.querySelectorAll(".grid-cell");
+          const crafting = document.querySelectorAll(".grid-cell");
           const igredientesPedido = [];
     
           
@@ -466,9 +466,9 @@
           var currentCount = parseInt(cartCountElement.innerText);
           cartCountElement.innerText = currentCount + 1;
           
-          cells.forEach((cell, i) => {
-            if (cell.firstChild) {
-              igredientesPedido.push({ posicao: i, item: cell.firstChild.id });
+          crafting.forEach((grid, i) => {
+            if (grid.firstChild) {
+              igredientesPedido.push({ posicao: i, item: grid.firstChild.id });
             } else {
               igredientesPedido.push({ posicao: i, item: null });
             }
@@ -509,10 +509,10 @@
             }
           });
     
-          atualizarItensNoGrid(); // 🆕 Atualiza nomes ao resetar
+          atualizarItensNoGrid(); 
         }
     
-        // 🆕 Atualiza a div de nomes dos itens no grid
+       
         function atualizarItensNoGrid() {
           const gridCells = document.querySelectorAll(".grid-cell");
           const nomes = [];

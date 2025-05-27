@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = "sua_chave_secreta"
 
 
-# Banco falso esse aqui, só para teste
+# "banco de dados"
 usuarios = {'emailteste@email.com': {'nome': 'Eumesmo', 'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85', 'xp': 3000, 'esmeraldas': 50000, 'endereco': 'Rua teste, 123','email': 'emailteste@email.com'}}
 admin = {'ADM-1': {'senha': 'scrypt:32768:8:1$qz4eXywBRQIcyaTs$c6e561005157ca7f657f3f716f395eaea8a5ff9b36879cde0f22ec6e1a5422e17ac53c4ad123f02ac1b929cfc6d750c6e9024aa56c6c26b5fd142322f02c5e85'}}
 pedidos = {} 
@@ -21,20 +21,6 @@ id_contador  = 1
 @app.route('/loginRegister')
 def loginRegister():
     return render_template('login.html')
-
-@app.route('/login', methods=['POST'])
-def login():
-    # Pegando os dados do form
-    email = request.form['email']
-    senha = request.form['senha']
-
-    # aqui você pode fazer a verificação com o banco de dados real, esse só está sendo usado pq nao temos um banco de dados real
-    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha): # verificando se o email existe e se a senha está correta
-        # Se o login for bem-sucedido, armazene as informações do usuário na sessão
-        session['user'] = usuarios[email]
-        return redirect('/') # Redireciona para a página inicial ou outra página após o login bem-sucedido
-    else:
-        return redirect('/loginRegister')
     
 @app.route('/register', methods=['POST'])
 def register():
@@ -55,6 +41,20 @@ def register():
     session['user'] = usuarios[email]
     return redirect('/')
 
+
+@app.route('/login', methods=['POST'])
+def login():
+    # Pegando os dados do form
+    email = request.form['email']
+    senha = request.form['senha']
+
+    
+    if email in usuarios and check_password_hash(usuarios[email]['senha'], senha): # verificando se o email existe e se a senha está correta
+        # Se o login for bem-sucedido, armazene as informações do usuário na sessão
+        session['user'] = usuarios[email]
+        return redirect('/') # Redireciona para a página inicial
+    else:
+        return redirect('/loginRegister')
 
 
 
@@ -117,16 +117,16 @@ def processar():
         return jsonify({'status': 'ok', 'mensagem': 'Faça o login antes de fazer um pedido!'}), 200
     
     data = request.get_json()  # Obtém os dados do frontend
-    precoTotal = data['precoTotal']  # Acessa o preço total
-    ingredientes_pedido = data['ingredientesPedido']  # Acessa a lista de ingredientes
-    nomesFiltrados = [celula['item'] for celula in ingredientes_pedido if celula['item'] is not None]
+    precoTotal = data['precoTotal']  # preço total
+    ingredientes_pedido = data['ingredientesPedido']  # lista de ingredientes
+    nomesFiltrados = [grid['item'] for grid in ingredientes_pedido if grid['item'] is not None]
 
     pedido = {
         "ingredientes": nomesFiltrados,
         "preco":precoTotal
     }
     print("Dados recebidos do frontend:")
-    print(pedido["ingredientes"])  # Aqui você pode fazer o que quiser com os dados
+    print(pedido["ingredientes"])  
     print(pedido["preco"])
     if not ingredientes_pedido:
         return jsonify({'status': 'ok', 'mensagem': 'Adicione ao menos um igrediente!'}), 200
@@ -229,6 +229,18 @@ def pagar():
         id_contador += 1 
         print(pedidos)
 
+        
+        # Adicionando o pedido à fila
+        novo_pedido = Pedido(id_contador, pedido["pizzas"], pedido["endereco"], pedido["email"], pedido["status"], pedido["preco"])
+        fila['contador'] += 1
+
+        if fila['inicio'] is None:
+            fila['inicio'] = novo_pedido
+            fila['fim'] = novo_pedido
+        else:
+            fila['fim'].proximo = novo_pedido
+            fila['fim'] = novo_pedido
+
         # Limpa o carrinho após o pagamento
         session["carrinho"] = []
         # Atualiza o XP do usuário
@@ -241,7 +253,6 @@ def pagar():
         })
     else:
         return jsonify({'mensagem': 'Saldo insuficiente ou usuário não logado.'}), 400
-
 
 
 @app.route('/user')
@@ -340,57 +351,41 @@ def logoutAdmin():
 @app.route('/adm')
 def adm():
     if not session.get('liberar_adm'):
-        return redirect('/loginAdmin')  # Ou retornar 403
-    session.pop('liberar_adm')  # remove o acesso após uso
-    print(pedidos)
-    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+        return redirect('/loginAdmin')  
+    session.pop('liberar_adm')  
 
-@app.route('/atualizarPedido', methods=['POST'])
+    if fila['inicio'] is None:
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=None)
+    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=fila['inicio'])
+
+@app.route('/EnviarPedido', methods=['POST'])
 def atualizarPedido():
     
     id = request.form['pedido_id']
-    pedidoType = request.form['pedido_type']
 
     if request.form.get('motoboys'):
         motoboy = request.form['motoboys']
     else:
-        motoboy = ""
+        motoboy = "noMotoboy"
 
 
     if motoboy == "noMotoboy":
-        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+        if fila['inicio'] is None:
+            return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido='nada')
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=fila['inicio'])
 
     print(pedidos)
-    if pedidoType == "upgrade":
-        for pedido in pedidos:
-            if pedido == int(id):
-                # Verificando o status atual e atualizando ou removendo conforme necessário
-                if pedidos[pedido]["status"] == "Pendente":
-                    pedidos[pedido]["motoboy"] = motoboy
-                    pedidos[pedido]["status"] = "Enviado"
-                elif pedidos[pedido]["status"] == "Enviado":
-                    pedidos[pedido]["status"] = "Finalizado"
-                elif pedidos[pedido]["status"] == "Finalizado":
-                    # Deletando o pedido do dicionário
-                    del pedidos[pedido]
-                else:
-                    print("Status inválido", pedidos[pedido]["status"])
-                break
-    elif pedidoType == "downgrade":
-        for pedido in pedidos:
-            if pedido == int(id):
-                print(pedido)
-                # Verificando o status atual e atualizando ou removendo conforme necessário
-                if pedidos[pedido]["status"] == "Enviado":
-                    pedidos[pedido]["status"] = "Pendente"
-                elif pedidos[pedido]["status"] == "Finalizado":
-                    pedidos[pedido]["status"] = "Enviado"
-                else:
-                    print("Status inválido", pedidos[pedido]["status"])
-                break
     
-    print(pedidos)            
-    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+    pedidos[int(id)]['status'] = "Enviado"
+    pedidos[int(id)]['motoboy'] = motoboy      
+
+    fila['inicio'] = fila['inicio'].proximo  
+    if fila['inicio'] is None:
+        fila['fim'] = None
+
+    if fila['inicio'] is None:
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=None)
+    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=fila['inicio'])
 
 @app.route('/adicionarMotoboy', methods=['POST'])
 def adicionarMotoboy():
@@ -398,14 +393,36 @@ def adicionarMotoboy():
     nomeMotoboy = request.form["motoboy_nome"]
 
     if nomeMotoboy in motoboys:
-        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
+            
+        if fila['inicio'] is None:
+            return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=None)
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=fila['inicio'])
     else:
         motoboys.append(nomeMotoboy) 
 
+    
+    if fila['inicio'] is None:
+        return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=None)
+    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys, pedido=fila['inicio'])
 
-    return render_template('adm.html', pedidos=pedidos, motoboys=motoboys)
 
+fila = {
+    'inicio': None,
+    'fim': None,	
+    'contador': 0,
+}
 
+class Pedido:
+    def __init__(self, id, pizzas, endereco, email, status, preco):  
+        self.id = id
+        self.pizzas = pizzas
+        self.endereco = endereco
+        self.email = email,
+        self.data = str(date.today())
+        self.status = status
+        self.preco = preco
+        self.motoboy = None
+        self.proximo = None
 
 if __name__ == '__main__':
     app.run(debug=True)
